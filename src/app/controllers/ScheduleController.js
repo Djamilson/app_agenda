@@ -1,27 +1,30 @@
-const { Appointment, User } = require('../models')
+const { Reserva, User, Quiosque } = require('../models')
 const { Op } = require('sequelize')
 const moment = require('moment')
 
 class ScheduleController {
   async index (req, res) {
     console.log('Sessao:', req.session.user.id)
-    const appointments = await Appointment.findAll({
-      include: [{ model: User, as: 'user' }],
+
+    const dataAgora = moment(moment().valueOf())
+
+    const appointments = await Reserva.findAll({
+      include: [
+        { model: User, as: 'user' },
+        { model: Quiosque, as: 'provider' }
+      ],
+
       where: {
-        provider_id: req.session.user.id,
+        user_id: req.session.user.id,
         date: {
           [Op.between]: [
-            moment()
-              .startOf('day')
-              .format(),
-            moment()
-              .endOf('day')
-              .format()
+            dataAgora.startOf('month').format(),
+            dataAgora.endOf('month').format()
           ]
         }
       }
     })
-    console.log('........ >>>>', appointments)
+
     return res.render('schedule/index', { appointments })
   }
 }

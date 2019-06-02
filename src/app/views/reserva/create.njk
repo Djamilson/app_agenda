@@ -1,0 +1,44 @@
+{% extends "_layouts/default.njk" %}
+{% block body %}
+  <div class="content">
+    <strong>Agendando horário</strong>
+    <div class="provider">
+      <div><img src="/files/{{ provider.avatar}}">
+        <strong>{{ provider.name}}</strong>
+      </div>
+    </div>
+    {% include "_partials/flash.njk" %}
+    <form action="/app/reservas/new/{{ provider.id }}" method="post">
+      <input type="text" name="date" class="flatpickr" placeholder="Escolha uma data">
+
+      <button type="submit">Agendar</button>
+    </form>
+
+  </div>
+
+  <script type="text/javascript">
+    flatpickr('.flatpickr', {
+      minDate: new Date(),
+      maxDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
+      weekNumbers: true,
+      dateFormat: 'd/m/Y',
+      locale: 'pt',
+      disable: [
+        function (dateObject, available = `{{available}}`) {
+          const array = available
+            .split(",")
+            .map(m => m);
+
+          for (var i = 0; i < array.length; i++) {
+
+            if (dateObject.getTime() === new Date(array[i]).getTime())
+              return true;
+          }
+          return false;
+
+        }
+      ]
+
+    })
+  </script>
+{% endblock %}

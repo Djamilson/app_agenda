@@ -5,9 +5,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Reserva.associate = models => {
     Reserva.belongsTo(models.User, { as: 'user', foreignKey: 'user_id' })
-    Reserva.belongsTo(models.Kiosque, { as: 'kiosque', foreignKey: 'kiosque_id' })
-
-    Reserva.belongsTo(models.User, {
+    Reserva.belongsTo(models.Quiosque, {
       as: 'provider',
       foreignKey: 'provider_id'
     })

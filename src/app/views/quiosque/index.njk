@@ -1,0 +1,58 @@
+{% extends "_layouts/default.njk" %}
+
+{% block body %}
+  <div class="content">
+
+    <form action="/app/quiosque" method="post" enctype="multipart/form-data">
+      {% include "_partials/flash.njk" %}
+
+      <label for="avatar">
+        <img src="/images/avatar.svg" height="24"/>
+      </label>
+      <input id="avatar" name="avatar" type="file"/>
+
+      <input type="text" name="name" placeholder="Nome completo">
+
+      <input type="text" name="complemento" placeholder="Complemento">
+
+      <label for="provider">
+        <input type="checkbox" id="provider" name="provider" value="1">
+        Apto para uso
+      </label>
+      <button type="submit">Salvar</button>
+    </form>
+    <br>
+
+    <p>Veja abaixo a lista de quiosques:</p>
+
+    <ul class="providers">
+     {% for quiosque in providers %}
+        <li class="provider">
+          <div>
+            <img src="/files/{{ quiosque.avatar }}"/>
+            <strong>{{ quiosque.name }}
+              <br>
+              {{ quiosque.complemento }}</strong>
+
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <a href="/app/dashboard" class="logout">Voltar ===>
+    </a>
+
+  </div>
+
+  <script type="text/javascript">
+    var avatarInput = document.getElementById('avatar')
+    var img = document.querySelector('label[for=avatar] img')
+
+    avatarInput.onchange = function (e) {
+      img
+        .classList
+        .add('preview')
+      img.src = URL.createObjectURL(e.target.files[0])
+    }
+  </script>
+{% endblock %}

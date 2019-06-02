@@ -1,0 +1,60 @@
+{% extends "_layouts/default.njk" %}
+
+{% block body %}
+  <div class="content">
+    <strong>Olá,
+      {{ user.name }}</strong>
+
+    <p>Cadastrar Usuário</p>
+
+    <form action="/app/user" method="post" enctype="multipart/form-data">
+      {% include "_partials/flash.njk" %}
+
+      <label for="avatar">
+        <img src="/images/avatar.svg" height="24"/>
+      </label>
+      <input id="avatar" name="avatar" type="file"/>
+
+      <input type="text" name="name" placeholder="Nome completo">
+
+      <input type="email" name="email" placeholder="Seu e-mail">
+
+      <input type="password" name="password" placeholder="Senha secreta">
+
+      <button type="submit">Salvar</button>
+    </form>
+
+    <br>
+
+    <ul class="providers">
+      {% for user in providers %}
+        <li class="provider">
+          <div>
+            <img src="/files/{{ user.avatar }}"/>
+            <strong>{{ user.name }}</strong>
+            <br>
+            {{ user.complemento }}</strong>
+        </div>
+        <a href="/app/user/edit/{{ user.id }}">+</a>
+      </li>
+    {% endfor %}
+  </ul>
+  
+  {% if (user.provider === true) %}
+    <a href="/app/dashboard">Voltar</a>
+  {% endif %}
+  <a href="/app/logout" class="logout">Sair</a>
+</div>
+
+<script type="text/javascript">
+  var avatarInput = document.getElementById('avatar')
+  var img = document.querySelector('label[for=avatar] img')
+
+  avatarInput.onchange = function (e) {
+    img
+      .classList
+      .add('preview')
+    img.src = URL.createObjectURL(e.target.files[0])
+  }
+</script>
+{% endblock %}

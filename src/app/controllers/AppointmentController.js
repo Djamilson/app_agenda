@@ -5,6 +5,7 @@ class AppointmentController {
     const provider = await User.findByPk(req.params.provider)
     return res.render('appointments/create', { provider })
   }
+
   async store (req, res) {
     const { id } = req.session.user
     const { provider } = req.params

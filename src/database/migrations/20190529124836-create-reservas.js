@@ -23,20 +23,10 @@ module.exports = {
         onDelete: 'CASCADE',
         allowNull: false
       },
-      kiosque_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'kiosques',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-        allowNull: false
-      },
       provider_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'kiosques',
+          model: 'quiosques',
           key: 'id'
         },
         onUpdate: 'CASCADE',

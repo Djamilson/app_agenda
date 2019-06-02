@@ -3,15 +3,26 @@
 {% block body %}
   <div class="content">
     <strong>Seus agendamentos</strong>
-    <p>Veja abaixo a lista de agendamentos que você tem para hoje:</p>
+    <div class="provider">
+      <div><img src="/files/{{ user.avatar}}">
+        <strong>Olá,
+          {{ user.name }}</strong>
+      </div>
+    </div>
+    <p>Veja abaixo a lista:</p>
 
     <ul class="providers">
       {% for appointment in appointments %}
         <li class="provider">
           <div>
-            <img src="/files/{{ appointment.user.avatar }}" />
-            <strong>{{ appointment.user.name }} <br> {{ appointment.date | date("HH:mm") }}</strong>
+            <img src="/files/{{ appointment.user.avatar }}"/>
+            <strong>{{ appointment.provider.name }}
+              <br>
+              {{ appointment.date | date("DD/MM/YYYY") }}
+            </strong>
           </div>
+          <a href="/app/reservas/new/{{ provider.id }}">Editar</a>
+          <a href="/app/reservas/new/{{ provider.id }}">Cancelar</a>
         </li>
       {% endfor %}
     </ul>
