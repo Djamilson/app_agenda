@@ -16,6 +16,7 @@ class ScheduleController {
 
       where: {
         user_id: req.session.user.id,
+        status: true,
         date: {
           [Op.between]: [
             dataAgora.startOf('month').format(),

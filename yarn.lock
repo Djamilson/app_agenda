@@ -1831,6 +1831,18 @@ isobject@^3.0.0, isobject@^3.0.1:
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
 
+jquery-confirm@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/jquery-confirm/-/jquery-confirm-3.3.4.tgz#493e29d33713e86d6eb0c5bd177677a4373310d1"
+  integrity sha512-SF3mX2kWAK9FP/Hut1uLHI30LPZ9DAki3Jq6JId9vg6AlMVugjlh40APtuxPQ/0C44XTkQFSVyRrg57NMbaicA==
+  dependencies:
+    jquery ">=1.6"
+
+jquery@>=1.6:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.4.1.tgz#714f1f8d9dde4bdfa55764ba37ef214630d80ef2"
+  integrity sha512-36+AdBzCL+y6qjw5Tx7HgzeGCzC81MDDgaUP8ld2zhx58HdqXGoBd+tHdrBMiyjGQs0Hxs/MLZTu/eHNJJuWPw==
+
 js-beautify@^1.8.8:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/js-beautify/-/js-beautify-1.9.1.tgz#6f9ef915f5d8d92b9f907606fce63795884c8040"
@@ -2245,6 +2257,11 @@ node-pre-gyp@^0.12.0:
     rimraf "^2.6.1"
     semver "^5.3.0"
     tar "^4"
+
+nodemailer@^6.2.1:
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.2.1.tgz#20d773925eb8f7a06166a0b62c751dc8290429f3"
+  integrity sha512-TagB7iuIi9uyNgHExo8lUDq3VK5/B0BpbkcjIgNvxbtVrjNqq0DwAOTuzALPVkK76kMhTSzIgHqg8X1uklVs6g==
 
 nodemon@^1.18.11:
   version "1.18.11"

@@ -28,6 +28,20 @@ module.exports = {
         defaultValue: false,
         type: Sequelize.BOOLEAN
       },
+
+      is_verified: {
+        allowNull: false,
+        defaultValue: false,
+        type: Sequelize.BOOLEAN
+      },
+
+      password_reset_token: { allowNull: true, type: Sequelize.STRING },
+
+      password_reset_expires: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+
       created_at: {
         allowNull: false,
         type: Sequelize.DATE

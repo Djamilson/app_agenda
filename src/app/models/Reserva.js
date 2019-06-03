@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Reserva = sequelize.define('Reserva', {
-    date: DataTypes.DATE
+    date: DataTypes.DATE,
+    status: DataTypes.BOOLEAN
   })
 
   Reserva.associate = models => {

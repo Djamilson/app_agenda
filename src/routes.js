@@ -34,6 +34,9 @@ routes.post('/signin', SessionController.store)
 routes.get('/signup', guestMiddleware, UserController.create)
 routes.post('/signup', upload.single('avatar'), UserController.store)
 
+routes.post('/confirmation', UserController.confirmationPost)
+routes.post('/resend', UserController.resendTokenPost)
+
 routes.use('/app', authMiddleware)
 routes.use('/app/logout', SessionController.destroy)
 routes.get('/app/dashboard', DashboardController.index)

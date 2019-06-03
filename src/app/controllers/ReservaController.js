@@ -14,7 +14,7 @@ class ReservaController {
     const { date } = req.body
     const datee = moment(date, 'DD/MM/YYYY')
 
-    await Reserva.create({ user_id: id, provider_id: provider, date: datee })
+    await Reserva.create({ user_id: id, provider_id: provider, date: datee, status: true })
     req.flash('success', 'Reserva efetuada com sucesso!')
     return res.redirect('/app/dashboard')
   }

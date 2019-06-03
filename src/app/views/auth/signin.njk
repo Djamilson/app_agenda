@@ -4,14 +4,17 @@
   <form action="/signin" method="post">
     <img src="/images/logo.svg" height="42"/>
 
-     {% include "_partials/flash.njk" %}
-     
+    {% include "_partials/flash.njk" %}
+
     <input type="email" name="email" placeholder="Seu e-mail">
     <input type="password" name="password" placeholder="Senha secreta">
 
     <button type="submit">Entrar</button>
-    <a href="/signup">
-      Criar conta grátis</a>
+    <div>
+      <a href="/signup">
+        Criar conta grátis</a>
+      <a href="/customUrl">Recuperar senha</a>
+    </div>
   </form>
 
 {% endblock %}
