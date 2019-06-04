@@ -11,7 +11,7 @@ class SessionController {
     const user = await User.findOne({ where: { email } })
 
     // Make sure the user has been verified
-    if (!user.isVerified) {
+    if (!user.is_verified) {
       req.flash(
         'error',
         'Seu email ainda não foi validado, acesse sua conta de email e confirme a validação do acesso!'

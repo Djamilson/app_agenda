@@ -34,6 +34,7 @@ routes.post('/signin', SessionController.store)
 routes.get('/signup', guestMiddleware, UserController.create)
 routes.post('/signup', upload.single('avatar'), UserController.store)
 
+routes.get('/confirmation/:token', UserController.confirmationPost)
 routes.post('/confirmation', UserController.confirmationPost)
 routes.post('/resend', UserController.resendTokenPost)
 
