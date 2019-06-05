@@ -9,24 +9,15 @@ class UserController {
   }
 
   async confirmationPost (req, res) {
-    // Find a matching token
-
-    console.log(' Retorno::: ', req.params.token)
     const token = req.params.token
-
-    // const { user_id, email } = req.body
-
-    console.log(' Token::: ', token)
 
     const tokenn = await Token.findOne({ where: { token } })
 
     // Make sure the user has been verified
-    if (!tokenn) {
-      req.flash('error', 'Token expirado, gere novo token!')
+    if (!moment(tokenn.expires).isAfter(moment())) {
+      req.flash('error', 'Token expirado, gere novo token, em recuperar senha!')
       return res.redirect('/')
     }
-    console.log(tokenn)
-    console.log(tokenn.user_id)
 
     const user = await User.findByPk(tokenn.user_id)
     if (!user) {
@@ -41,12 +32,8 @@ class UserController {
       return res.redirect('/')
     }
 
-    // Verify and save the user
-    /* await User.update(user.id, user, {
-      isVerified: true
-    }) */
-
     User.update({ is_verified: true, user }, { where: { id: user.id } })
+    Token.update({ status: true, tokenn }, { where: { id: tokenn.id } })
 
     req.flash(
       'success',
@@ -54,13 +41,13 @@ class UserController {
     )
     return res.redirect('/')
   }
+
   async resendTokenPost (req, res) {
     const { email } = req.body
 
     const user = await User.findOne({ where: { email } })
 
     // Make sure the user has been verified
-
     if (!user) {
       req.flash(
         'error',
@@ -68,49 +55,125 @@ class UserController {
       )
       return res.redirect('/')
     }
-    if (user.isVerified) {
-      req.flash('error', 'Este usuário já foi verificado!')
+
+    const tokenTest = await Token.findAll({
+      include: [{ model: User, as: 'user' }],
+
+      where: {
+        user_id: user.id,
+        status: false
+      }
+    })
+
+    // tokenTest.map(token => {
+    if (
+      tokenTest.length > 0 &&
+      moment(tokenTest[0].expires).isAfter(moment()) &&
+      tokenTest[0].status !== true
+    ) {
+      req.flash(
+        'error',
+        `Você tem um token que ainda não expirou, entre no email ${email} para usá-lo!`
+      )
       return res.redirect('/')
     }
+    // })
+
+    console.log('Data: ', moment(tokenTest.expires).isAfter(moment()))
+    console.log('Status:', tokenTest.status)
+    console.log('Data expirada cria o token! ======================')
+    console.log(
+      'Status diferente de true vai criar o token! ======================'
+    )
 
     // Create a verification token for this user
-    const token = await Token.create({ user_id: user.id })
+    const token = await Token.create({
+      user_id: user.id,
+      expires: moment()
+        .add('1', 'days')
+        .format()
+    })
 
     // Send the email
-
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         type: 'OAuth2',
         user: process.env.USER_EMAIL,
         clientId: process.env.CLIENTID_EMAIL,
-
         clientSecret: process.env.CLIENTSECRET_EMAIL,
         refreshToken: process.env.REFRESHTOKEN_EMAIL
       }
     })
 
+    // se o usuário tive verificado redefini a senha
+    let url = '/confirmation/'
+
+    if (user.is_verified) {
+      url = '/redefinirsenha/'
+    }
+    // variavel para pegar o primeiro nome do usuário para mostra no email
+    const primeironome = user.name.split(' ')
     const mailOptions = {
       from: 'no-reply@yourwebapplication.com',
       to: user.email,
-      subject: 'Account Verification Token',
-      text:
-        'Hello,\n\n' +
-        'Please verify your account by clicking the link: \nhttp://' +
+      subject: 'Validação de conta',
+      html:
+        '<div style="background-color:#f4f4f4;padding:20px 40px 30px 40px"><div class="adM">' +
+        '</div><div style="padding-bottom:5px"><div class="adM"></div>' +
+        '</div>' +
+        '   <div style="border:1px solid #a5a5a5;background-color:#ffffff;color:#4d4d4d;font:14px Arial,Helvetica,sans-serif;padding:10px;text-align:left">' +
+        `<p><strong>Olá, ${primeironome[0]}!</strong></p>` +
+        '<p> A Equipe da AABB Palmas - To, recebeu a sua solicita&ccedil;&atilde;o para criação de um novo token, ou redefini&ccedil;&atilde;o de senha.\n\n' +
+        '</p>' +
+        '<p>' +
+        'Use o link a seguir nas pr&oacute;ximas 24 horas para gerar um novo Token, ou criar uma nova senha!' +
+        '</p>' +
+        '<p align="justify" style="width:400px;">' +
+        'clique no link: </p>' +
+        '<p> >> <strong> \nhttp://' +
         req.headers.host +
-        '/confirmation/' +
+        `${url}` +
         token.token +
-        '.\n'
+        '.</strong> <<' +
+        '</p>' +
+        '<p>' +
+        'Se n&atilde;o foi voc&ecirc; que solicitou a cria&ccedil;&atilde;o de um novo Token ou de uma nova senha, n&atilde;o se preocupe, apenas ignore esta mensagem.' +
+        '</p>' +
+        '<p>' +
+        'Obrigado,' +
+        '<br>' +
+        'Equipe da AABB Palmas - To' +
+        '</p>' +
+        '</div>' +
+        '<div style="color:#727272;font:12px Arial,Helvetica,sans-serif;padding:5px 0px;text-align:left">' +
+        'Encontre as melhores op&ccedil;&otilde;es para lazer' +
+        '</div><div class="yj6qo"></div><div class="adL">' +
+        '</div></div>'
     }
 
-    transporter.sendMail(mailOptions, function (err) {
+    await transporter.sendMail(mailOptions, function (err) {
       if (err) {
-        return res.status(500).send({ msg: err.message })
+        req.flash(
+          'error',
+          'Não foi possível fazer a redefinição de token ou de senha, tente novamente!'
+        )
+        return res.redirect('/')
       }
-      res
-        .status(200)
-        .send('A verification email has been sent to ' + user.email + '.')
     })
+
+    if (user.is_verified) {
+      req.flash(
+        'success',
+        `Socilitação de redefição de senha enviada para o email [${email}] com sucesso!`
+      )
+      return res.redirect('/')
+    } else {
+      req.flash(
+        'success',
+        `Socilitação de novo token foi enviado para ${user.email}`
+      )
+    }
 
     return res.redirect('/')
   }
@@ -139,7 +202,12 @@ class UserController {
     })
 
     // Create a verification token for this user
-    const token = await Token.create({ user_id: user.id })
+    const token = await Token.create({
+      user_id: user.id,
+      expires: moment()
+        .add('1', 'days')
+        .format()
+    })
 
     // Send the email
 
@@ -149,26 +217,52 @@ class UserController {
         type: 'OAuth2',
         user: process.env.USER_EMAIL,
         clientId: process.env.CLIENTID_EMAIL,
-
         clientSecret: process.env.CLIENTSECRET_EMAIL,
         refreshToken: process.env.REFRESHTOKEN_EMAIL
       }
     })
 
+    // variavel para pegar o primeiro nome do usuário para mostra no email
+    const primeironome = user.name.split(' ')
     const mailOptions = {
       from: 'no-reply@yourwebapplication.com',
       to: user.email,
-      subject: 'Account Verification Token',
-      text:
-        'Hello,\n\n' +
-        'Please verify your account by clicking the link: \nhttp://' +
+      subject: 'VAlidação de sua conta',
+      html:
+        '<div style="background-color:#f4f4f4;padding:20px 40px 30px 40px"><div class="adM">' +
+        '</div><div style="padding-bottom:5px"><div class="adM"></div>' +
+        '</div>' +
+        '   <div style="border:1px solid #a5a5a5;background-color:#ffffff;color:#4d4d4d;font:14px Arial,Helvetica,sans-serif;padding:10px;text-align:left">' +
+        `<p><strong>Olá, ${primeironome[0]}!</strong></p>` +
+        '<p> A Equipe da AABB Palmas - To, recebeu a sua solicita&ccedil;&atilde;o para criação de um novo token, ou redefini&ccedil;&atilde;o de senha.\n\n' +
+        '</p>' +
+        '<p>' +
+        'Use o link a seguir nas pr&oacute;ximas 24 horas para gerar um novo Token, ou criar uma nova senha!' +
+        '</p>' +
+        '<p align="justify" style="width:400px;">' +
+        'clique no link: </p>' +
+        '<p> >> <strong> \nhttp://' +
         req.headers.host +
-        '/confirmation/' +
+        `/confirmation/` +
         token.token +
-        '.\n'
+        '.</strong> <<' +
+        '</p>' +
+        '<p>' +
+        'Se n&atilde;o foi voc&ecirc; que solicitou a cria&ccedil;&atilde;o de um novo Token ou de uma nova senha, n&atilde;o se preocupe, apenas ignore esta mensagem.' +
+        '</p>' +
+        '<p>' +
+        'Obrigado,' +
+        '<br>' +
+        'Equipe da AABB Palmas - To' +
+        '</p>' +
+        '</div>' +
+        '<div style="color:#727272;font:12px Arial,Helvetica,sans-serif;padding:5px 0px;text-align:left">' +
+        'Encontre as melhores op&ccedil;&otilde;es para lazer' +
+        '</div><div class="yj6qo"></div><div class="adL">' +
+        '</div></div>'
     }
 
-    transporter.sendMail(mailOptions, function (err) {
+    await transporter.sendMail(mailOptions, function (err) {
       if (err) {
         req.flash(
           'error',
@@ -176,22 +270,20 @@ class UserController {
         )
         return res.redirect('/')
       }
-      req.flash(
-        'success',
-        `Cadastrado com sucesso, verifique seu ${
-          user.email
-        } para ativar sua conta!`
-      )
-      return res.redirect('/')
     })
+
+    req.flash(
+      'success',
+      `Cadastrado efetuado com sucesso, verifique o email ${
+        user.email
+      } para ativar sua conta!`
+    )
 
     return res.redirect('/')
   }
 
   async index (req, res) {
     console.log('Sessao:', req.session.user.id)
-
-    console.log('........ >>>>')
 
     const providers = await User.findAll({ where: { provider: true } })
 
@@ -220,4 +312,5 @@ class UserController {
     return res.render('user/new', { providers })
   }
 }
+
 module.exports = new UserController()

@@ -1,0 +1,18 @@
+{% extends "_layouts/auth.njk" %}
+
+{% block body %}
+  <form action="/resend" method="post">
+    <img src="/images/logo.svg" height="42"/>
+
+    {% include "_partials/flash.njk" %}
+
+    <input type="email" name="email" placeholder="Seu e-mail">
+
+    <button type="submit">Solicitar</button>
+
+    <a href="/" class="logout">
+      Já possuo conta</a>
+
+  </form>
+
+{% endblock %}

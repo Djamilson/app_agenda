@@ -9,6 +9,13 @@ class SessionController {
     const { email, password } = req.body
 
     const user = await User.findOne({ where: { email } })
+    console.log('====> ', user)
+
+    if (!user) {
+      console.log('Usuário não encontrado')
+      req.flash('error', 'Usuário não encontrado')
+      return res.redirect('/')
+    }
 
     // Make sure the user has been verified
     if (!user.is_verified) {
@@ -16,12 +23,6 @@ class SessionController {
         'error',
         'Seu email ainda não foi validado, acesse sua conta de email e confirme a validação do acesso!'
       )
-      return res.redirect('/')
-    }
-
-    if (!user) {
-      console.log('Usuário não encontrado')
-      req.flash('error', 'Usuário não encontrado')
       return res.redirect('/')
     }
 

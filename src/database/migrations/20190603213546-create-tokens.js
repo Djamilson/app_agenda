@@ -20,10 +20,18 @@ module.exports = {
         onDelete: 'CASCADE',
         allowNull: false
       },
+      expires: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      status: {
+        allowNull: false,
+        defaultValue: false,
+        type: Sequelize.BOOLEAN
+      },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE,
-        expires: 43200
+        type: Sequelize.DATE
       },
       updated_at: {
         allowNull: false,

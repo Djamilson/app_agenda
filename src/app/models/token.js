@@ -4,7 +4,9 @@ module.exports = (sequelize, DataTypes) => {
   const Token = sequelize.define(
     'Token',
     {
-      token: DataTypes.STRING
+      token: DataTypes.STRING,
+      expires: DataTypes.DATE,
+      status: DataTypes.BOOLEAN
     },
     {
       hooks: {
