@@ -1,4 +1,11 @@
 # Logs
+node_modules
+
+tmp/uploads/*
+
+!tmp/uploads/.gitkeep
+.env
+
 logs
 *.log
 npm-debug.log*

@@ -1,37 +1,32 @@
-{% extends "_layouts/default.njk" %}
+{% extends "_layouts/auth.njk" %}
 
 {% block body %}
-  <div class="content">
-    <div class="provider">
-      <div><img src="/files/{{ user.avatar}}">
-        <strong>Olá,
-          {{ user.name }}</strong>
-      </div>
-    </div>
-
-    <strong>Olá,
-      {{ user.name }}</strong>
-
-    <p>Redefinindo senha</p>
+  <div >
 
     <form action="/redefinirSenhaPost" method="post">
+      <div class="auth-wrapper">
+        <img src="/files/{{ user.avatar}}" height="24"/>
+      </div>
+
+      <strong>Olá,
+        {{ user.name }}</strong>
+
+      <p>Redefina sua senha</p>
+
       {% include "_partials/flash.njk" %}
 
-      <input type="text" name="id" value="{{user.id}}">
-      <input type="text" name="tokenid" value="{{tokenn.id}}">
+      <input name="id" type="hidden" value="{{user.id}}">
+      <input name="tokenid" type="hidden" value="{{tokenn.id}}">
 
-      <input type="password" placeholder="Senha" name="password" id="password" required="required">
+      <input type="password" placeholder="Nova senha" name="password" id="password" required="required">
       <input type="password" placeholder="Confirme Senha" name="confirma_password" id="confirm_password" required="required">
 
       <button type="submit">Redefinir senha</button>
+      <div>
+        <a href="/">Área de login</a>
+      </div>
     </form>
-
-    {% if (user.provider === true) %}
-      <a href="/app/dashboard">Voltar</a>
-    {% endif %}
-    <a href="/" class="logout">Área de Login</a>
   </div>
-
   <script type="text/javascript">
 
     var password = document.getElementById("password"),
@@ -48,4 +43,5 @@
     password.onchange = validatePassword;
     confirm_password.onkeyup = validatePassword;
   </script>
+
 {% endblock %}

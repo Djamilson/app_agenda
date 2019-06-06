@@ -3,62 +3,89 @@
 {% block body %}
   <div class="content">
     <strong>Seus agendamentos</strong>
-    <div class="provider">
-      <div><img src="/files/{{ user.avatar}}">
-        <strong>Olá,
-          {{ user.name }}</strong>
+
+    <div class="auth-wrapper">
+      <div >
+        <img src="/files/{{ user.avatar}}" height="24"/>
       </div>
     </div>
-    <p>Veja abaixo a lista:</p>
+    <strong>Olá,
+      {{ user.name}}</strong>
+      
+    <p>Veja abaixo suas reservas:</p>
 
     <ul class="providers">
       {% for appointment in appointments %}
         <li class="provider">
-          <div>
-            <img src="/files/{{ appointment.user.avatar }}"/>
-            <strong>{{ appointment.provider.name }}
-              <br>
-              {{ appointment.date | date("DD/MM/YYYY") }}
-            </strong>
-          </div>
-          <a href="/app/reservas/new/{{ provider.id }}">Deletar</a>
-          <button class='btn btnDelete' href=''>delete</button>
-          <input type="submit" value="delete" onclick="return ConfirmDelete()"/>
-          <button class="confirm" type="button">Delete the comment</button>
-          <button class="confirm" type="button" data-text="Do you really want to delete that comment?" data-confirm-button="Yes I am" data-cancel-button="Whoops no">
-            Delete the user
-          </button>
-        </li>
-      {% endfor %}
-    </ul>
 
-    {% include "_partials/flash.njk" %}
+          <div class="row">
+            <div class="div2">
+              <img src="/files/{{ appointment.avatar }}"/></div>
 
-    <a href="/app/dashboard" class="logout">Voltar</a>
+            <div class="div1">
+              <div class="component">
+                <div >
+                  <strong>{{ appointment.name }}</strong>
+                </div>
+                <div class="box">
+                  <div class="div2">
+                    <div class="formatText">
+                      Hora da reserva: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                    <div>{{ appointment.hora }}</div>
 
+                  </div>
+                  <div class="div2">
+                    <div class="formatText">
+                      Reservado em: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                    <div>
+                      {{ appointment.reservadoem }}</div>
+                  </div>
+                  <div class="div2">
+                    <div class="formatText">
+                      Reservado para: &nbsp;&nbsp;&nbsp;
+                    </div>
+                    <div>{{ appointment.reservadopara }}</div>
+                  </div>
+                  <div class="div2">
+                    <div class="formatText">
+                      {{ appointment.complemento }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-  </div>
-  <script type="text/javascript">
-    $(".confirm").confirm({
-      text: "Are you sure you want to delete that comment?",
-      title: "Confirmation required",
-      confirm: function (button) {
-        delete();
-      },
-      cancel: function (button) {
-        // nothing to do
-      },
-      confirmButton: "Yes I am",
-      cancelButton: "No",
-      post: true,
-      confirmButtonClass: "btn-danger",
-      cancelButtonClass: "btn-default",
-      dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
-    });
+          </li>
+        {% endfor %}
+      </ul>
 
-    function ConfirmDelete() {
-      return confirm("Are you sure you want to delete?");
-    }
+      {% include "_partials/flash.njk" %}
 
-  </script>
-{% endblock %}
+      <a href="/app/dashboard" class="logout">Voltar</a>
+
+    </div>
+    <script type="text/javascript">
+
+      $(".confirm").confirm({
+        text: "Are you sure you want to delete that comment?",
+        title: "Confirmation required",
+        confirm: function (button) {
+          delete();
+        },
+        cancel: function (button) {
+          // nothing to do
+        },
+        confirmButton: "Yes I am",
+        cancelButton: "No",
+        post: true,
+        confirmButtonClass: "btn-danger",
+        cancelButtonClass: "btn-default",
+        dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
+      });
+
+      function ConfirmDelete() {
+        return confirm("Are you sure you want to delete?");
+      }
+    </script>
+  {% endblock %}

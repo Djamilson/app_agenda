@@ -34,8 +34,14 @@ routes.post('/confirmation', controllers.UserController.confirmationPost)
 routes.get('/redefinirSenha/:token', controllers.RedefinirSenhaController.index)
 routes.post('/resend', controllers.UserController.resendTokenPost)
 
-routes.get('/solicitarRecuperacaoSenha', controllers.RedefinirSenhaController.solicitarRecuperacaoSenha)
-routes.post('/redefinirSenhaPost', controllers.RedefinirSenhaController.redefinirSenhaPost)
+routes.get(
+  '/solicitarRecuperacaoSenha',
+  controllers.RedefinirSenhaController.solicitarRecuperacaoSenha
+)
+routes.post(
+  '/redefinirSenhaPost',
+  controllers.RedefinirSenhaController.redefinirSenhaPost
+)
 
 routes.use('/app', authMiddleware)
 routes.use('/app/logout', controllers.SessionController.destroy)
@@ -72,10 +78,8 @@ routes.get(
   controllers.AvailableQuiosqueController.index,
   controllers.ReservaController.create
 )
-routes.post(
-  '/app/reservas/new/:pcontrollersrovider',
-  controllers.ReservaController.store
-)
+
+routes.post('/app/reservas/new/:provider', controllers.ReservaController.store)
 
 routes.get(
   '/app/availableQuiosque/:provider',

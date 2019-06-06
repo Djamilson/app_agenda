@@ -12,23 +12,38 @@
       <ul class="providers">
         {% for provider in providers %}
           <li class="provider">
-            <div>
-              <img src="/files/{{ provider.avatar }}"/>
-              <strong>{{ provider.name }}</strong>
-              <br>
-              {{ provider.complemento }}
-            </div>
-            <a href="/app/reservas/new/{{ provider.id }}">+</a>
-          </li>
-        {% endfor %}
-      </ul>
-    {% endif %}
 
-    {% if (user.provider === true) %}
-      <a href="/app/schedule">Meus agendamentos</a>
-      <a href="/app/quiosque" class="logout">Cadastrar Quiosque</a>
-      <a href="/app/user" class="logout">Cadastrar Usuário</a>
-    {% endif %}
-    <a href="/app/logout" class="logout">Sair</a>
-  </div>
-{% endblock %}
+            <div class="row">
+              <div class="div2">
+                <img src="/files/{{ provider.avatar }}"/>
+
+                <div class="div1">
+                  <div class="component">
+                    <div >
+                      <strong>{{ provider.name }}</strong>
+                    </div>
+                    <div class="box2">
+
+                      <div class="formatText">
+                        {{ provider.complemento }}</div>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="link">
+                  <a href="/app/reservas/new/{{ provider.id }}">+</a>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        {% if (user.provider === true) %}
+          <a href="/app/schedule">Meus agendamentos</a>
+          <a href="/app/quiosque" class="logout">Cadastrar Quiosque</a>
+          <a href="/app/user" class="logout">Cadastrar Usuário</a>
+        {% endif %}
+        <a href="/app/logout" class="logout">Sair</a>
+      </div>
+    {% endblock %}
