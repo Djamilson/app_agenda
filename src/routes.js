@@ -64,6 +64,7 @@ routes.post(
 )
 
 routes.get('/app/available/:provider', controllers.AvailableController.index)
+routes.get('/app/schedule/delete/:id', controllers.ScheduleController.delete)
 routes.get('/app/schedule', controllers.ScheduleController.index)
 
 routes.get('/app/user', controllers.UserController.index)

@@ -299,21 +299,21 @@ ul.providers {
 .div1 .box {
   padding: 2px;
   flex-direction: column;
-  width: 215px;
+  width: 185px;
 }
 
 .div1 .box2 {
-  padding: 2px;
+  padding: 1px;
   flex-direction: column;
   width: 180px;
 }
 
  .link {
   z-index: 1;
+  padding: 5px;
 }
 
 .div1 .box .div2 {
-  padding: 1.5px;
   opacity: 0.4;
 }
 

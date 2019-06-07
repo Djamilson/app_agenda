@@ -10,9 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       password: DataTypes.VIRTUAL,
       password_hash: DataTypes.STRING,
       provider: DataTypes.BOOLEAN,
-      is_verified: DataTypes.BOOLEAN,
-      password_reset_token: DataTypes.STRING,
-      password_reset_expires: DataTypes.DATE
+      is_verified: DataTypes.BOOLEAN
     },
     {
       hooks: {
