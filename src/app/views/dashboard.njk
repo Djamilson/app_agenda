@@ -2,10 +2,16 @@
 
 {% block body %}
   <div class="content">
+
+    <div class="auth-wrapper">
+      <div >
+        <img src="/files/{{ user.avatar}}" height="24"/>
+      </div>
+    </div>
     <strong>Olá,
-      {{ user.name }}</strong>
+      {{ usuario.name}}</strong>
+
     <p>Inicie um agendamento escolhendo um quiosque:</p>
-    <h1>Lista de Contatos <i class="fa fa-address-book-o" aria-hidden="true"></i></h1>
 
     {% include "_partials/flash.njk" %}
     {% if (user.provider === false) %}

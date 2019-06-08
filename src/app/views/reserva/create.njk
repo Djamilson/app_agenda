@@ -1,7 +1,6 @@
 {% extends "_layouts/default.njk" %}
 {% block body %}
   <div class="content">
-    <strong>Agendando horário</strong>
 
     <div class="provider">
       <div class="row">
@@ -25,6 +24,9 @@
       </div>
     </div>
     {% include "_partials/flash.njk" %}
+
+    <strong>Agendando horário</strong>
+
     <form action="/app/reservas/new/{{ provider.id }}" method="post">
       <input type="text" name="date" class="flatpickr" placeholder="Escolha uma data">
 
