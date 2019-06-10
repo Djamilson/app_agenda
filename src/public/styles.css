@@ -31,7 +31,7 @@ body {
 }
 
 .auth-wrapper .content {
-  margin-top: 560px;
+  margin-top: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,7 +47,6 @@ body {
 .auth-wrapper .content .div {
   justify-content: center;
   align-items: center;
-  padding-top: 60px;
 }
 .auth-wrapper .content .div form {
   display: flex;
@@ -90,6 +89,7 @@ body {
   color: #444;
   padding: 10px 10px;
 }
+
 .auth-wrapper .content form > img {
   margin-bottom: 20px;
 }
@@ -129,16 +129,19 @@ body {
   padding: 10px 10px;
 }
 
+.auth-wrapper div form strong {
+  margin-left: 15px;
+  text-align: center;
+  color: #444;
+  padding: 10px 10px;
+}
+
 .auth-wrapper p {
   font-size: 14px;
   color: #666;
   margin-bottom: 20px;
   text-align: center;
 }
-
-
-
-
 
 .auth-wrapper .content div > img {
   margin-bottom: 20px;
@@ -212,6 +215,20 @@ body {
 }
 
 .auth-wrapper form label[for="avatar"] img.preview {
+  width: 100%;
+  min-height: 100%;
+}
+.auth-wrapper div {
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 60px;
+}
+
+.auth-wrapper div form label[for="avatar"] img {
   width: 100%;
   min-height: 100%;
 }
@@ -304,9 +321,20 @@ body {
   overflow: hidden;
 }
 
+.auth-wrapper form label[for="avatar"] img.preview {
+  width: 100%;
+  min-height: 100%;
+}
 .auth-wrapper .content form label[for="avatar"] img.preview {
   width: 100%;
   min-height: 100%;
+}
+
+.auth-wrapper form label[for="provider"] {
+  margin: 5px 0 10px;
+  font-size: 13px;
+  color: #444;
+  align-self: center;
 }
 
 .auth-wrapper .content form label[for="provider"] {
@@ -314,6 +342,10 @@ body {
   font-size: 13px;
   color: #444;
   align-self: center;
+}
+
+.auth-wrapper form label[for="provider"] input {
+  margin-right: 2px;
 }
 
 .auth-wrapper .content form label[for="provider"] input {
@@ -361,7 +393,8 @@ body {
   width: 100%;
   background: #fff;
   border-radius: 4px;
-  padding: 30px 20px;
+  padding-left: 20px;
+  padding-right: 20px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 

@@ -3,9 +3,6 @@
 {% block body %}
   <div id="hour">
     <div class="content">
-
-      <strong>Seus agendamentos</strong>
-
       <div class="auth-wrapper">
         <div >
           <img src="/files/{{ user.avatar}}" height="24"/>
@@ -18,7 +15,8 @@
         <i class="fas fa-arrow-left"></i>
         &nbsp;&nbsp;&nbsp;Voltar</a>
       <br>
-      <p>Veja abaixo suas reservas:</p>
+      <strong>Seus agendamentos</strong>
+
       {% include "_partials/flash.njk" %}
       <ul class="providers">
 

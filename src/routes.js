@@ -74,8 +74,15 @@ routes.post(
   controllers.UserController.storeNew
 )
 
+routes.get('/app/user/edit/senha/:id', controllers.UserController.editarsenha)
+routes.post('/app/user/edit/upsenha', controllers.UserController.upsenha)
+
 routes.get('/app/user/edit/:id', controllers.UserController.editar)
-routes.post('/app/user/edit/salvaredicao', upload.single('avatar'), controllers.UserController.redefinirSenhaPost)
+routes.post(
+  '/app/user/edit/salvaredicaoperfil',
+  upload.single('avatar'),
+  controllers.UserController.salvaredicaoperfil
+)
 routes.get(
   '/app/reservas/new/:provider',
   controllers.AvailableQuiosqueController.index,

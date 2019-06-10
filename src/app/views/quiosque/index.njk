@@ -1,78 +1,37 @@
 {% extends "_layouts/auth.njk" %}
 
 {% block body %}
-  <div class="content">
+  <form action="/app/quiosque" method="post" enctype="multipart/form-data">
 
-    <form action="/app/quiosque" method="post" enctype="multipart/form-data">
+    <strong>Olá,
+      {{ usuario.name }}</strong>
 
-      <ul class="social-buttons">
-        <li class="content-aligth">
-          <a href="/app/logout" class="logout">
-            <i class="fas fa-sign-out-alt"></i>
-            &nbsp;&nbsp;&nbsp;Sair</a>
-        </li>
-      </ul>
+    <p>Cadastre todos itens disponíveis para locação!</p>
 
-      {% include "_partials/flash.njk" %}
+    {% include "_partials/flash.njk" %}
 
-      <label for="avatar">
-        <img src="/images/avatar.svg" height="24"/>
-      </label>
-      <input id="avatar" name="avatar" type="file"/>
+    <label for="avatar">
+      <img src="/images/avatar.svg" height="24"/>
+    </label>
 
-      <input type="text" name="name" placeholder="Nome completo">
+    <input id="avatar" name="avatar" type="file"/>
 
-      <input type="text" name="complemento" placeholder="Complemento">
+    <input type="text" name="name" placeholder="Nome completo">
 
-      <label for="provider">
-        <input type="checkbox" id="provider" name="provider" value="1">
-        Apto para uso
-      </label>
-      <button type="submit">
-        <i class="fas fa-check"></i>
-        &nbsp;&nbsp;&nbsp;Salvar
-      </button>
+    <input type="text" name="complemento" placeholder="Complemento">
 
-    </form>
+    <label for="provider">
+      <input type="checkbox" id="provider" name="provider" checked="checked" value="1">
+      Condição da locação: Apto para uso?
+    </label>
 
-    <br>
-
-    <p>Veja abaixo a lista de quiosques:</p>
-
-    <ul class="providers">
-      {% for provider in providers %}
-        <li class="provider">
-          <div class="row">
-            <div class="div2">
-              <img src="/files/{{ provider.avatar }}"/>
-
-              <div class="div1">
-                <div class="component">
-                  <div >
-                    <strong>{{ provider.name }}</strong>
-                  </div>
-                  <div class="box2">
-                    <div class="formatText">
-                      {{ provider.complemento }}</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="link">
-                <a href="/app/reservas/new/{{ provider.id }}">
-                  <i class="fas fa-plus"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </li>
-      {% endfor %}
-    </ul>
-
-    <a href="/app/dashboard" class="logout">Voltar ===>
-    </a>
-
-  </div>
+    <button type="submit">
+      <i class="fas fa-check"></i>
+      &nbsp;&nbsp;&nbsp; Salvar</button>
+    <a href="/">
+      <i class="fas fa-arrow-left"></i>
+      &nbsp;&nbsp;&nbsp; Voltar</a>
+  </form>
 
   <script type="text/javascript">
     var avatarInput = document.getElementById('avatar')

@@ -3,28 +3,31 @@
 {% block body %}
   <div >
 
-    <form action="/app/user/edit/salvaredicao" method="post">
+    <form action="/app/user/edit/upsenha" method="post">
       <div class="auth-wrapper">
         <img src="/files/{{ user.avatar}}" height="24"/>
       </div>
 
       <strong>Olá,
-        {{ user.name }}</strong>
+        {{ usuario.name }}</strong>
 
       <p>Redefina sua senha</p>
 
       {% include "_partials/flash.njk" %}
 
-      <input name="id" type="hidden" value="{{user.id}}">
-      <input name="tokenid" type="hidden" value="{{tokenn.id}}">
+      <input name="id" type="hidden" value="{{useredit.id}}">
 
       <input type="password" placeholder="Nova senha" name="password" id="password" required="required">
       <input type="password" placeholder="Confirme Senha" name="confirma_password" id="confirm_password" required="required">
 
-      <button type="submit">Redefinir senha</button>
-      <div>
-        <a href="/">Área de login</a>
-      </div>
+      <button type="submit">
+        <i class="fas fa-check"></i>
+        &nbsp;&nbsp;&nbsp;Redefinir senha</button>
+
+      <a href="/">
+        <i class="fas fa-arrow-left"></i>
+        &nbsp;&nbsp;&nbsp; Voltar</a>
+
     </form>
   </div>
   <script type="text/javascript">

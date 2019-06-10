@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer')
+const bcrypt = require('bcryptjs')
 
 const moment = require('moment')
 const { User, Token } = require('../models')
@@ -46,71 +47,52 @@ class UserController {
     const { id } = req.params
     const useredit = await User.findByPk(id)
 
-    return res.render('user/signup', { useredit })
+    const name = await req.session.user.name.split(' ')
+    const usuario = { ...req.session.user, name: name[0] }
+
+    return res.render('user/signup', { useredit, usuario })
   }
+  async editarsenha (req, res) {
+    const { id } = req.params
+    const useredit = await User.findByPk(id)
 
-  async redefinirSenhaPost_ (req, res) {
-    const { id } = req.body
+    const name = await req.session.user.name.split(' ')
+    const usuario = { ...req.session.user, name: name[0] }
 
+    return res.render('user/frmredefinirsenha', { useredit, usuario })
+  }
+  async upsenha (req, res) {
+    const { id, password } = req.body
     const user = await User.findByPk(id)
-    console.log('============================')
-
-    console.log('ID', id)
-
-    console.log('============================:', user)
-    /* // Make sure the user has been verified
-    if (!user) {
-      req.flash('error', 'Não foi possível redefinir a senha!')
-      return res.redirect('/')
-    }
 
     const passwordNovo = await bcrypt.hash(password, 8)
 
-    User.update({ password_hash: passwordNovo, user }, { where: { id } })
-
-    const tokenFinal = await Token.findByPk(tokenid)
-    console.log('IDIDIIDI: ', tokenFinal.id)
-
-    console.log('IDIDIIDI: ', tokenFinal)
-    Token.update({ status: true, tokenFinal }, { where: { id: tokenFinal.id } })
-
+    await User.update({ password_hash: passwordNovo, user }, { where: { id } })
     req.flash(
       'success',
-      'Senha editada com sucesso, já pode acessar a área restrita!'
-    ) */
-    return res.redirect('/')
+      `Senha redefinda com sucesso, alguns dados serão atualizado depois que fizer login novamente!`
+    )
+    return res.redirect('/app/dashboard')
   }
 
-  async redefinirSenhaPost (req, res) {
+  async salvaredicaoperfil (req, res) {
     const { id, name } = req.body
-    // const { filename: avatar } = req.file
-    console.log(req)
-    console.log('Meu ID: ', id)
-    console.log('Name: ', name)
 
     const user = await User.findByPk(id)
 
     const file = req.file
     if (!file) {
-      console.log('Sem upload a file')
-
-      User.update({ name, user }, { where: { id: user.id } })
+      await User.update({ name, user }, { where: { id: user.id } })
     } else {
-      console.log('Ótimo upload a file')
-
       const { filename: avatar } = req.file
-      User.update({ name, avatar, user }, { where: { id: user.id } })
+      await User.update({ name, avatar, user }, { where: { id: user.id } })
     }
 
-    //  if (req.file !== null) {
-    //
-    // } else {
-    //   User.update({ name: req.name, user }, { where: { id: user.id } })
-    // }
-
-    const useredit = await User.findByPk(id)
-    req.flash('success', 'Perfil editado com sucesso!')
-    return res.render('user/signup', { useredit })
+    req.flash(
+      'success',
+      'Perfil editado com sucesso, alguns dados serão atualizado depois que fizer login novamente!'
+    )
+    return res.redirect('/app/dashboard')
   }
 
   async resendTokenPost (req, res) {
@@ -148,14 +130,6 @@ class UserController {
       )
       return res.redirect('/')
     }
-    // })
-
-    console.log('Data: ', moment(tokenTest.expires).isAfter(moment()))
-    console.log('Status:', tokenTest.status)
-    console.log('Data expirada cria o token! ======================')
-    console.log(
-      'Status diferente de true vai criar o token! ======================'
-    )
 
     // Create a verification token for this user
     const token = await Token.create({
@@ -209,7 +183,7 @@ class UserController {
         '.</strong> <<' +
         '</p>' +
         '<p>' +
-        'Se n&atilde;o foi voc&ecirc; que solicitou a cria&ccedil;&atilde;o de um novo Token ou de uma nova senha, n&atilde;o se preocupe, apenas ignore esta mensagem.' +
+        'Se n&atilde;o foi voc&ecirc; que solicitou a cria&ccedil;&atilde;o de um novo Token ou de uma nova senha, n&atilde;o se preocupe, apenas ignore está mensagem.' +
         '</p>' +
         '<p>' +
         'Obrigado,' +
@@ -257,7 +231,7 @@ class UserController {
 
     // Make sure the user has been verified
     if (userBanco) {
-      req.flash('error', 'Esse email já esta cadastrado!')
+      req.flash('error', 'Esse email já está cadastrado!')
       return res.redirect('/')
     }
 
@@ -265,7 +239,7 @@ class UserController {
     const user = await User.create({
       ...req.body,
       avatar,
-      isVerified: true
+      isVerified: false
     })
 
     // Create a verification token for this user
@@ -315,7 +289,7 @@ class UserController {
         '.</strong> <<' +
         '</p>' +
         '<p>' +
-        'Se n&atilde;o foi voc&ecirc; que solicitou a cria&ccedil;&atilde;o de um novo Token ou de uma nova senha, n&atilde;o se preocupe, apenas ignore esta mensagem.' +
+        'Se n&atilde;o foi voc&ecirc; que solicitou a cria&ccedil;&atilde;o de um novo Token ou de uma nova senha, n&atilde;o se preocupe, apenas ignore está mensagem.' +
         '</p>' +
         '<p>' +
         'Obrigado,' +
@@ -350,18 +324,15 @@ class UserController {
   }
 
   async index (req, res) {
-    console.log('Sessao:', req.session.user.id)
-
     const providers = await User.findAll({ where: { provider: true } })
 
-    console.log('Meus provaider: ', providers)
+    const name = await req.session.user.name.split(' ')
+    const usuario = { ...req.session.user, name: name[0] }
 
-    return res.render('user/new', { providers })
+    return res.render('user/new', { providers, usuario })
   }
 
   async createNew (req, res) {
-    console.log('Sessao:', req.session.user.id)
-    console.log('........ >>>>')
     const providers = await User.findAll({ where: { provider: true } })
 
     return res.render('user/new', { providers })
@@ -369,14 +340,106 @@ class UserController {
 
   async storeNew (req, res) {
     const { filename: avatar } = req.file
+    const { email } = req.body
 
-    console.log('Meu req::: ', req.body)
-    const provider = true
-    await User.create({ ...req.body, provider, avatar })
+    const userBanco = await User.findOne({ where: { email } })
 
-    const providers = await User.findAll({ where: { provider: true } })
+    // Make sure the user has been verified
+    if (userBanco) {
+      req.flash('error', 'Esse email já está cadastrado!')
+      return res.redirect('/')
+    }
 
-    return res.render('user/new', { providers })
+    // Create and save the user
+    const user = await User.create({
+      ...req.body,
+      avatar,
+      provider: true,
+      isVerified: false
+    })
+
+    // Create a verification token for this user
+    const token = await Token.create({
+      user_id: user.id,
+      expires: moment()
+        .add('1', 'days')
+        .format()
+    })
+
+    // Send the email
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        type: 'OAuth2',
+        user: process.env.USER_EMAIL,
+        clientId: process.env.CLIENTID_EMAIL,
+        clientSecret: process.env.CLIENTSECRET_EMAIL,
+        refreshToken: process.env.REFRESHTOKEN_EMAIL
+      }
+    })
+
+    // variavel para pegar o primeiro nome do usuário para mostra no email
+    const primeironome = user.name.split(' ')
+    const mailOptions = {
+      from: 'no-reply@yourwebapplication.com',
+      to: user.email,
+      subject: 'Validação de sua conta',
+      html:
+        '<div style="background-color:#f4f4f4;padding:20px 40px 30px 40px"><div class="adM">' +
+        '</div><div style="padding-bottom:5px"><div class="adM"></div>' +
+        '</div>' +
+        '   <div style="border:1px solid #a5a5a5;background-color:#ffffff;color:#4d4d4d;font:14px Arial,Helvetica,sans-serif;padding:10px;text-align:left">' +
+        `<p><strong>Olá, ${primeironome[0]}!</strong></p>` +
+        '<p> A Equipe da AABB Palmas - To, recebeu a sua solicita&ccedil;&atilde;o para criação de um novo token, ou redefini&ccedil;&atilde;o de senha.\n\n' +
+        '</p>' +
+        '<p>' +
+        'Use o link a seguir nas pr&oacute;ximas 24 horas para gerar um novo Token, ou criar uma nova senha!' +
+        '</p>' +
+        '<p align="justify" style="width:400px;">' +
+        'clique no link: </p>' +
+        '<p> >> <strong> \nhttp://' +
+        req.headers.host +
+        `/confirmation/` +
+        token.token +
+        '.</strong> <<' +
+        '</p>' +
+        '<p>' +
+        'Se n&atilde;o foi voc&ecirc; que solicitou a cria&ccedil;&atilde;o de um novo Token ou de uma nova senha, n&atilde;o se preocupe, apenas ignore está mensagem.' +
+        '</p>' +
+        '<p>' +
+        'Obrigado,' +
+        '<br>' +
+        'Equipe da AABB Palmas - To' +
+        '</p>' +
+        '</div>' +
+        '<div style="color:#727272;font:12px Arial,Helvetica,sans-serif;padding:5px 0px;text-align:left">' +
+        'Encontre as melhores op&ccedil;&otilde;es para lazer' +
+        '</div><div class="yj6qo"></div><div class="adL">' +
+        '</div></div>'
+    }
+
+    await transporter.sendMail(mailOptions, function (err) {
+      if (err) {
+        req.flash(
+          'error',
+          'Não foi possível fazer o cadastrado, tente novamente!'
+        )
+        return res.redirect('/app/dashboard')
+      }
+    })
+
+    req.flash(
+      'success',
+      `Cadastrado efetuado com sucesso, verifique o email ${
+        user.email
+      } para ativar sua conta!`
+    )
+
+    const name = await req.session.user.name.split(' ')
+    const usuario = { ...req.session.user, name: name[0] }
+
+    return res.render('user/new', { usuario })
   }
 }
 

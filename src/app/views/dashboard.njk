@@ -38,7 +38,7 @@
           &nbsp;&nbsp;&nbsp;Editar Perfil</a>
       </li>
       <li>
-        <a href="/app/schedule" class="editar">
+        <a href="/app/user/edit/senha/{{ user.id }}" class="editar">
           <i class="fas fa-edit"></i>
           &nbsp;&nbsp;&nbsp;Editar Senha</a>
       </li>
@@ -54,7 +54,7 @@
 
     {% if (user.provider === false) %}
 
-      <p>Inicie um agendamento escolhendo um quiosque:</p>
+      <p>Inicie um agendamento escolhendo uma opção:</p>
 
       <ul class="providers">
         {% for provider in providers %}

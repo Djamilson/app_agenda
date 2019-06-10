@@ -1,63 +1,58 @@
-{% extends "_layouts/default.njk" %}
+{% extends "_layouts/auth.njk" %}
 
 {% block body %}
-  <div class="content">
+  <form action="/app/user" method="post" enctype="multipart/form-data">
+    {% include "_partials/flash.njk" %}
+
     <strong>Olá,
-      {{ user.name }}</strong>
+      {{ usuario.name }}</strong>
 
-    <p>Cadastrar Usuário</p>
+    <p>Usuário criados aqui são os administradores do sistema!</p>
 
-    <form action="/app/user" method="post" enctype="multipart/form-data">
-      {% include "_partials/flash.njk" %}
+    <label for="avatar">
+      <img src="/images/avatar.svg" height="24"/>
+    </label>
 
-      <label for="avatar">
-        <img src="/images/avatar.svg" height="24"/>
-      </label>
-      <input id="avatar" name="avatar" type="file"/>
+    <input id="avatar" name="avatar" type="file"/>
 
-      <input type="text" name="name" placeholder="Nome completo" >
+    <input type="text" name="name" placeholder="Nome completo">
 
-      <input type="email" name="email" placeholder="Seu e-mail">
+    <input type="email" name="email" placeholder="Seu e-mail">
 
-      <input type="password" name="password" placeholder="Senha secreta">
+    <input type="password" placeholder="Nova senha" name="password" id="password" required="required">
+    <input type="password" placeholder="Confirme Senha" name="confirma_password" id="confirm_password" required="required">
 
-      <button type="submit">Salvar</button>
-    </form>
+    <button type="submit">
+      <i class="fas fa-check"></i>
+      &nbsp;&nbsp;&nbsp; Criar conta</button>
+    <a href="/">
+      <i class="fas fa-arrow-left"></i>
+      &nbsp;&nbsp;&nbsp; Voltar</a>
+  </form>
 
-    <br>
+  <script type="text/javascript">
+    var avatarInput = document.getElementById('avatar')
+      var img = document.querySelector('label[for=avatar] img')
 
-    <ul class="providers">
-      {% for user in providers %}
-        <li class="provider">
-          <div>
-            <img src="/files/{{ user.avatar }}"/>
-            <strong>{{ user.name }}</strong>
-            <br>
-            {{ user.complemento }}</strong>
-        </div>
-        <a href="/app/user/edit/{{ user.id }}">
-          <i class="fas fa-plus"></i>
-        </a>
+        avatarInput.onchange = function (e) {
+          img
+            .classList
+            .add('preview')
+          img.src = URL.createObjectURL(e.target.files[0])
+        }
 
-      </li>
-    {% endfor %}
-  </ul>
+        var password = document.getElementById("password"),
+          confirm_password = document.getElementById("confirm_password");
 
-  {% if (user.provider === true) %}
-    <a href="/app/dashboard">Voltar</a>
-  {% endif %}
-  <a href="/app/logout" class="logout">Sair</a>
-</div>
+        function validatePassword() {
+          if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Senhas diferentes!");
+          } else {
+            confirm_password.setCustomValidity('');
+          }
+        }
 
-<script type="text/javascript">
-  var avatarInput = document.getElementById('avatar')
-  var img = document.querySelector('label[for=avatar] img')
-
-  avatarInput.onchange = function (e) {
-    img
-      .classList
-      .add('preview')
-    img.src = URL.createObjectURL(e.target.files[0])
-  }
-</script>
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+  </script>
 {% endblock %}

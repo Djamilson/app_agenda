@@ -1,47 +1,36 @@
-{% extends "_layouts/default.njk" %}
+{% extends "_layouts/auth.njk" %}
+
 {% block body %}
-  <div class="content">
-
-    <div class="provider">
-      <div class="row">
-        <div class="div2">
-          <img src="/files/{{ provider.avatar }}"/>
-
-          <div class="div1">
-            <div class="component">
-              <div >
-                <strong>{{ provider.name }}</strong>
-              </div>
-              <div class="box2">
-                <div class="div2">
-                  <div class="formatText">
-                    {{ provider.complemento }}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    {% include "_partials/flash.njk" %}
-
-    <strong>Agendando horário</strong>
+  <div >
 
     <form id="form" action="/app/reservas/new/{{ provider.id }}" method="post">
+
+      <label for="avatar">
+        <img src="/files/{{provider.avatar}}" height="42"/>
+      </label>
+
+      <input id="avatar" name="avatar" type="file"/>
+
+      <strong>{{ provider.name }}</strong>
+
+      <p>
+        {{ provider.complemento }}</p>
+      <br>
+      {% include "_partials/flash.njk" %}
+
+      <label>
+        Escolha:</label>
+
       <input type="text" id="datareserva" name="date" class="flatpickr" placeholder="Escolha uma data">
 
       <button type="submit">
         <i class="fas fa-check"></i>
-        &nbsp;&nbsp;&nbsp;Agendar
-      </button>
-
-      <a href="/app/dashboard" class="voltar">
+        &nbsp;&nbsp;&nbsp; Agendar</button>
+      <a href="/">
         <i class="fas fa-arrow-left"></i>
-        &nbsp;&nbsp;&nbsp;Voltar</a>
+        &nbsp;&nbsp;&nbsp; Voltar</a>
     </form>
-
   </div>
-
   <script type="text/javascript">
 
     var form = document.getElementById('form'),
@@ -80,4 +69,5 @@
 
     })
   </script>
+
 {% endblock %}

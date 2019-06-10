@@ -2,22 +2,20 @@ const { Quiosque } = require('../models')
 
 class UserController {
   async index (req, res) {
-    console.log('Sessao:', req.session.user.id)
-
-    console.log('........ >>>>')
     const providers = await Quiosque.findAll()
 
-    console.log('Meus provaider: ', providers)
+    const name = await req.session.user.name.split(' ')
+    const usuario = { ...req.session.user, name: name[0] }
 
-    return res.render('quiosque/index', { providers })
+    return res.render('quiosque/index', { providers, usuario })
   }
 
   async create (req, res) {
     console.log('Sessao:', req.session.user.id)
     console.log('........ >>>>')
-    const providers = await Quiosque.findAll()
+    //  const providers = await Quiosque.findAll()
 
-    return res.render('quiosque/index', { providers })
+    return res.render('quiosque/index')
   }
 
   async store (req, res) {
@@ -25,9 +23,14 @@ class UserController {
 
     await Quiosque.create({ ...req.body, avatar })
 
-    const providers = await Quiosque.findAll()
+    // const name = await req.session.user.name.split(' ')
+    // const usuario = { ...req.session.user, name: name[0] }
 
-    return res.render('quiosque/index', { providers })
+    req.flash('success', `Cadastrado efetuado com sucesso!`)
+
+    //  return res.redirect('/app/quiosque', { usuario })
+
+    return res.redirect('/app/dashboard')
   }
 }
 module.exports = new UserController()
