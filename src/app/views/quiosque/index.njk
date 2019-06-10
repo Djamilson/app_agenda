@@ -1,9 +1,18 @@
-{% extends "_layouts/default.njk" %}
+{% extends "_layouts/auth.njk" %}
 
 {% block body %}
   <div class="content">
 
     <form action="/app/quiosque" method="post" enctype="multipart/form-data">
+
+      <ul class="social-buttons">
+        <li class="content-aligth">
+          <a href="/app/logout" class="logout">
+            <i class="fas fa-sign-out-alt"></i>
+            &nbsp;&nbsp;&nbsp;Sair</a>
+        </li>
+      </ul>
+
       {% include "_partials/flash.njk" %}
 
       <label for="avatar">
@@ -19,21 +28,42 @@
         <input type="checkbox" id="provider" name="provider" value="1">
         Apto para uso
       </label>
-      <button type="submit">Salvar</button>
+      <button type="submit">
+        <i class="fas fa-check"></i>
+        &nbsp;&nbsp;&nbsp;Salvar
+      </button>
+
     </form>
+
     <br>
 
     <p>Veja abaixo a lista de quiosques:</p>
 
     <ul class="providers">
-     {% for quiosque in providers %}
+      {% for provider in providers %}
         <li class="provider">
-          <div>
-            <img src="/files/{{ quiosque.avatar }}"/>
-            <strong>{{ quiosque.name }}
-              <br>
-              {{ quiosque.complemento }}</strong>
+          <div class="row">
+            <div class="div2">
+              <img src="/files/{{ provider.avatar }}"/>
 
+              <div class="div1">
+                <div class="component">
+                  <div >
+                    <strong>{{ provider.name }}</strong>
+                  </div>
+                  <div class="box2">
+                    <div class="formatText">
+                      {{ provider.complemento }}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="link">
+                <a href="/app/reservas/new/{{ provider.id }}">
+                  <i class="fas fa-plus"></i>
+                </a>
+              </div>
+            </div>
           </div>
         </li>
       {% endfor %}

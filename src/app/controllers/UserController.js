@@ -42,6 +42,77 @@ class UserController {
     return res.redirect('/')
   }
 
+  async editar (req, res) {
+    const { id } = req.params
+    const useredit = await User.findByPk(id)
+
+    return res.render('user/signup', { useredit })
+  }
+
+  async redefinirSenhaPost_ (req, res) {
+    const { id } = req.body
+
+    const user = await User.findByPk(id)
+    console.log('============================')
+
+    console.log('ID', id)
+
+    console.log('============================:', user)
+    /* // Make sure the user has been verified
+    if (!user) {
+      req.flash('error', 'Não foi possível redefinir a senha!')
+      return res.redirect('/')
+    }
+
+    const passwordNovo = await bcrypt.hash(password, 8)
+
+    User.update({ password_hash: passwordNovo, user }, { where: { id } })
+
+    const tokenFinal = await Token.findByPk(tokenid)
+    console.log('IDIDIIDI: ', tokenFinal.id)
+
+    console.log('IDIDIIDI: ', tokenFinal)
+    Token.update({ status: true, tokenFinal }, { where: { id: tokenFinal.id } })
+
+    req.flash(
+      'success',
+      'Senha editada com sucesso, já pode acessar a área restrita!'
+    ) */
+    return res.redirect('/')
+  }
+
+  async redefinirSenhaPost (req, res) {
+    const { id, name } = req.body
+    // const { filename: avatar } = req.file
+    console.log(req)
+    console.log('Meu ID: ', id)
+    console.log('Name: ', name)
+
+    const user = await User.findByPk(id)
+
+    const file = req.file
+    if (!file) {
+      console.log('Sem upload a file')
+
+      User.update({ name, user }, { where: { id: user.id } })
+    } else {
+      console.log('Ótimo upload a file')
+
+      const { filename: avatar } = req.file
+      User.update({ name, avatar, user }, { where: { id: user.id } })
+    }
+
+    //  if (req.file !== null) {
+    //
+    // } else {
+    //   User.update({ name: req.name, user }, { where: { id: user.id } })
+    // }
+
+    const useredit = await User.findByPk(id)
+    req.flash('success', 'Perfil editado com sucesso!')
+    return res.render('user/signup', { useredit })
+  }
+
   async resendTokenPost (req, res) {
     const { email } = req.body
 
@@ -194,10 +265,6 @@ class UserController {
     const user = await User.create({
       ...req.body,
       avatar,
-      password_reset_expires: moment()
-        .add('1', 'days')
-        .format(),
-
       isVerified: true
     })
 
@@ -227,7 +294,7 @@ class UserController {
     const mailOptions = {
       from: 'no-reply@yourwebapplication.com',
       to: user.email,
-      subject: 'VAlidação de sua conta',
+      subject: 'Validação de sua conta',
       html:
         '<div style="background-color:#f4f4f4;padding:20px 40px 30px 40px"><div class="adM">' +
         '</div><div style="padding-bottom:5px"><div class="adM"></div>' +

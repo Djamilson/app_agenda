@@ -1,27 +1,25 @@
 {% extends "_layouts/auth.njk" %}
 
 {% block body %}
-  <form action="/signup" method="post" enctype="multipart/form-data">
+  <form action="/app/user/edit/salvaredicao" method="post"
+  enctype="multipart/form-data">
     {% include "_partials/flash.njk" %}
+    <br>
+    <input name="id" type="hidden" value="{{useredit.id}}">
 
     <label for="avatar">
-      <img src="/images/avatar.svg" height="24"/>
+      <img src="/files/{{useredit.avatar}}" height="24"/>
     </label>
 
     <input id="avatar" name="avatar" type="file"/>
 
-    <input type="text" name="name" placeholder="Nome completo">
-
-    <input type="email" name="email" placeholder="Seu e-mail">
-
-    <input type="password" placeholder="Nova senha" name="password" id="password" required="required">
-    <input type="password" placeholder="Confirme Senha" name="confirma_password" id="confirm_password" required="required">
+    <input type="text" name="name" placeholder="Nome completo" value="{{useredit.name}} {{useredit.id}}">
 
     <button type="submit">
       <i class="fas fa-check"></i>
-      &nbsp;&nbsp;&nbsp; Criar conta</button>
+      &nbsp;&nbsp;&nbsp; Editar</button>
     <a href="/">
-      Já possuo conta</a>
+      Voltar</a>
   </form>
 
   <script type="text/javascript">

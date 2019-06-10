@@ -1,0 +1,83 @@
+.main-wrapper .content form label[for="avatar"] {
+  width: 80px;
+  height: 80px;
+  background: #eee;
+  border-radius: 50%;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.main-wrapper .content form label[for="avatar"]:hover {
+  background: #634dac;
+}
+
+.main-wrapperr .content label img {
+  width: 80px;
+  height: 80px;
+  background: #eee;
+  border-radius: 50%;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.main-wrapper .content form label[for="avatar"] img.preview {
+  width: 100%;
+  min-height: 100%;
+}
+
+
+
+.main-wrapper .content form input[type="file"] {
+  display: none;
+}
+
+
+.main-wrapper .content form .input-container {
+  margin: 3em auto;
+  max-width: 300px;
+  background-color: #EDEDED;
+  border: 1px solid #DFDFDF;
+  border-radius: 5px;
+}
+
+.main-wrapper .content form input[type='file'] {
+  display: none;
+}
+
+.main-wrapper .content form .file-info {
+  font-size: 0.9em;
+}
+
+.main-wrapper .content form .browse-btn {
+  background: #03A595;
+  color: #fff;
+  min-height: 35px;
+  padding: 10px;
+  border: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.main-wrapper .content form .browse-btn:hover {
+  background: #4ec0b4;
+}
+
+@media (max-width: 300px) {
+  .main-wrapper .content form button {
+    width: 100%;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 0;
+  }
+
+  .main-wrapper .content form .file-info {
+    display: block;
+    margin: 10px 5px;
+  }
+}

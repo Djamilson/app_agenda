@@ -9,12 +9,20 @@
     <input type="email" name="email" placeholder="Seu e-mail">
     <input type="password" name="password" placeholder="Senha secreta">
 
-    <button type="submit">Entrar</button>
-    <div>
-      <a href="/signup">
-        Criar conta grátis</a>
-      <a href="/solicitarRecuperacaoSenha">Recuperar senha</a>
-    </div>
+    <button type="submit">  <i class="fas fa-lock"></i>&nbsp;&nbsp;&nbsp;Entrar</button>
+
+    <ul class="social-buttons">
+      <li>
+        <a href="/signup" class="font12">
+          <i class="fas fa-address-book"></i>
+          Criar conta</a>
+      </li>
+      <li>
+        <a class="font12" href="/solicitarRecuperacaoSenha">
+          Recupera senha</a>
+      </li>
+    </ul>
+
   </form>
 
 {% endblock %}

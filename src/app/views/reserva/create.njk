@@ -27,17 +27,35 @@
 
     <strong>Agendando horário</strong>
 
-    <form action="/app/reservas/new/{{ provider.id }}" method="post">
-      <input type="text" name="date" class="flatpickr" placeholder="Escolha uma data">
+    <form id="form" action="/app/reservas/new/{{ provider.id }}" method="post">
+      <input type="text" id="datareserva" name="date" class="flatpickr" placeholder="Escolha uma data">
 
-      <button type="submit">Agendar</button>
+      <button type="submit">
+        <i class="fas fa-check"></i>
+        &nbsp;&nbsp;&nbsp;Agendar
+      </button>
 
-      <a href="/app/dashboard" class="logout">Voltar</a>
+      <a href="/app/dashboard" class="voltar">
+        <i class="fas fa-arrow-left"></i>
+        &nbsp;&nbsp;&nbsp;Voltar</a>
     </form>
 
   </div>
 
   <script type="text/javascript">
+
+    var form = document.getElementById('form'),
+      nome = document.getElementById('datareserva');
+
+    form.onsubmit = function () {
+      if (nome.value == "") {
+
+        bootbox.alert({title: 'Atenção!', message: "O campo data não pode ficar vazio!", size: 'small'});
+
+        return false;
+      }
+    };
+
     flatpickr('.flatpickr', {
       minDate: new Date(),
       maxDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),

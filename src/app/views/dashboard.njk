@@ -11,16 +11,54 @@
     <strong>Olá,
       {{ usuario.name}}</strong>
 
-    <p>Inicie um agendamento escolhendo um quiosque:</p>
+    <ul class="social-buttons">
+      <li class="content-aligth">
+        <a href="/app/logout" class="logout">
+          <i class="fas fa-sign-out-alt"></i>
+          &nbsp;&nbsp;&nbsp;Sair</a>
+      </li>
+    </ul>
 
+    <ul class="social-buttons">
+
+      {% if (user.provider === true) %}
+        <li>
+          <a href="/app/quiosque" class="editar">
+            <i class="fas fa-edit"></i>&nbsp;&nbsp;&nbsp; Cadastrar Quiosque</a>
+        </li>
+        <li>
+          <a href="/app/user" class="editar">
+            <i class="fas fa-edit"></i>&nbsp;&nbsp;&nbsp; Cadastrar Usuário</a>
+        </li>
+      {% endif %}
+
+      <li>
+        <a href="/app/user/edit/{{ user.id }}" class="editar">
+          <i class="fas fa-edit"></i>
+          &nbsp;&nbsp;&nbsp;Editar Perfil</a>
+      </li>
+      <li>
+        <a href="/app/schedule" class="editar">
+          <i class="fas fa-edit"></i>
+          &nbsp;&nbsp;&nbsp;Editar Senha</a>
+      </li>
+      <li>
+        <a href="/app/schedule">
+          <i class="fas fa-calendar-check" role="presentation"></i>
+          &nbsp;&nbsp;&nbsp;Meus agendamentos</a>
+      </li>
+    </ul>
+
+    <br>
     {% include "_partials/flash.njk" %}
+
     {% if (user.provider === false) %}
-      <a href="/app/schedule">Meus agendamentos</a>
-      <br>
+
+      <p>Inicie um agendamento escolhendo um quiosque:</p>
+
       <ul class="providers">
         {% for provider in providers %}
           <li class="provider">
-
             <div class="row">
               <div class="div2">
                 <img src="/files/{{ provider.avatar }}"/>
@@ -31,27 +69,22 @@
                       <strong>{{ provider.name }}</strong>
                     </div>
                     <div class="box2">
-
                       <div class="formatText">
                         {{ provider.complemento }}</div>
-
                     </div>
                   </div>
                 </div>
 
                 <div class="link">
-                  <a href="/app/reservas/new/{{ provider.id }}">+</a>
+                  <a href="/app/reservas/new/{{ provider.id }}">
+                    <i class="fas fa-plus"></i>
+                  </a>
                 </div>
-              </li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-
-        {% if (user.provider === true) %}
-          <a href="/app/schedule">Meus agendamentos</a>
-          <a href="/app/quiosque" class="logout">Cadastrar Quiosque</a>
-          <a href="/app/user" class="logout">Cadastrar Usuário</a>
-        {% endif %}
-        <a href="/app/logout" class="logout">Sair</a>
-      </div>
-    {% endblock %}
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+{% endblock %}

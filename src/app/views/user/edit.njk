@@ -1,0 +1,117 @@
+{% extends "_layouts/default.njk" %}
+
+{% block body %}
+  <div class="content">
+    <strong>Olá,
+      {{ user.name }}</strong>
+
+    <p>Editar Perfil</p>
+
+    <ul class="social-buttons">
+
+      <li>
+        <a href="/app/user/edit/{{ user.id }}" class="editar">
+          <i class="fas fa-edit"></i>
+          &nbsp;&nbsp;&nbsp;Editar Senha</a>
+      </li>
+      <li>
+        <a href="/app/schedule" class="editar">
+          <i class="fas fa-edit"></i>
+          &nbsp;&nbsp;&nbsp;Editar Nome</a>
+      </li>
+      <li>
+        <a href="/app/schedule">
+          <i class="fas fa-calendar-check" role="presentation"></i>
+          &nbsp;&nbsp;&nbsp;Editar Imagem</a>
+      </li>
+    </ul>
+
+    <form action="/app/user" method="post" enctype="multipart/form-data">
+      {% include "_partials/flash.njk" %}
+
+      <div class="auth-wrapper">
+        <div >
+          <img src="/files/{{ user.avatar}}" height="24"/>
+        </div>
+      </div>
+
+      <div class="input-container">
+        <input type="file" id="real-input">
+        <button class="browse-btn">
+          Editar imagem
+        </button>
+        <span class="file-info">Upload a file</span>
+      </div>
+
+      <input type="text" name="name" value="{{useredit.name}}" placeholder="Nome completo">
+
+      <input type="password" name="password" placeholder="Senha secreta" value="{{useredit.password_hash}}">
+
+      <input type="password" placeholder="Nova senha" name="password" id="password" required="required">
+      <input type="password" placeholder="Confirme Senha" name="confirma_password" id="confirm_password" required="required">
+
+      <button type="submit">
+        <i class="fas fa-check"></i>
+        &nbsp;&nbsp;&nbsp;Editar
+      </button>
+
+      <a href="/app/dashboard" class="logout">
+        <i class="fas fa-arrow-left"></i>
+        &nbsp;&nbsp;&nbsp;Voltar</a>
+    </form>
+
+    <br>
+
+    <ul class="providers">
+      {% for user in providers %}
+        <li class="provider">
+          <div>
+            <img src="/files/{{ user.avatar }}"/>
+            <strong>{{ user.name }}</strong>
+            <br>
+            {{ user.complemento }}</strong>
+        </div>
+        <a href="/app/user/edit/{{ user.id }}">+</a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  {% if (user.provider === true) %}
+    <a href="/app/dashboard">Voltar</a>
+  {% endif %}
+  <a href="/app/logout" class="logout">Sair</a>
+</div>
+
+<script type="text/javascript">
+
+  const uploadButton = document.querySelector('.browse-btn');
+  const fileInfo = document.querySelector('.file-info');
+  const realInput = document.getElementById('real-input');
+
+  uploadButton.addEventListener('click', (e) => {
+    realInput.click();
+  });
+
+  realInput.addEventListener('change', () => {
+    const name = realInput
+      .value
+      .split(/\\|\//)
+      .pop();
+    const truncated = name.length > 20
+      ? name.substr(name.length - 20)
+      : name;
+
+    fileInfo.innerHTML = truncated;
+  });
+
+  var avatarInput = document.getElementById('avatar')
+  var img = document.querySelector('label[for=avatar] img')
+
+  avatarInput.onchange = function (e) {
+    img
+      .classList
+      .add('preview')
+    img.src = URL.createObjectURL(e.target.files[0])
+  }
+</script>
+{% endblock %}

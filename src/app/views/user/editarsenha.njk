@@ -5,14 +5,12 @@
     {% include "_partials/flash.njk" %}
 
     <label for="avatar">
-      <img src="/images/avatar.svg" height="24"/>
+      <img src="/files/{{useredit.avatar}}" height="24"/>
     </label>
 
     <input id="avatar" name="avatar" type="file"/>
 
-    <input type="text" name="name" placeholder="Nome completo">
-
-    <input type="email" name="email" placeholder="Seu e-mail">
+    <input type="text" name="name" placeholder="Nome completo" value="{{useredit.name}}">
 
     <input type="password" placeholder="Nova senha" name="password" id="password" required="required">
     <input type="password" placeholder="Confirme Senha" name="confirma_password" id="confirm_password" required="required">

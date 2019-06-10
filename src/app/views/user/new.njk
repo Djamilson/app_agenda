@@ -15,7 +15,7 @@
       </label>
       <input id="avatar" name="avatar" type="file"/>
 
-      <input type="text" name="name" placeholder="Nome completo">
+      <input type="text" name="name" placeholder="Nome completo" >
 
       <input type="email" name="email" placeholder="Seu e-mail">
 
@@ -35,11 +35,14 @@
             <br>
             {{ user.complemento }}</strong>
         </div>
-        <a href="/app/user/edit/{{ user.id }}">+</a>
+        <a href="/app/user/edit/{{ user.id }}">
+          <i class="fas fa-plus"></i>
+        </a>
+
       </li>
     {% endfor %}
   </ul>
-  
+
   {% if (user.provider === true) %}
     <a href="/app/dashboard">Voltar</a>
   {% endif %}

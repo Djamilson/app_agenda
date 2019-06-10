@@ -23,6 +23,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   )
 
+  User.associate = models => {
+    User.hasOne(models.Token, {
+      as: 'token',
+      foreignKey: 'user_id',
+      foreignKeyConstraint: true
+    })
+  }
+
   // metodos personalizados para o usuário
   User.prototype.checkPassword = function (password) {
     return bcrypt.compare(password, this.password_hash)
