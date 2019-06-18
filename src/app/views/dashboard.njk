@@ -52,39 +52,51 @@
     <br>
     {% include "_partials/flash.njk" %}
 
-    {% if (user.provider === false) %}
+    <p>Inicie um agendamento escolhendo uma opção:</p>
 
-      <p>Inicie um agendamento escolhendo uma opção:</p>
+    <ul class="providers">
+      {% for provider in providers %}
+        <li class="provider">
+          <div class="row">
+            <div class="div2">
+              <img src="/files/{{ provider.avatar }}"/>
 
-      <ul class="providers">
-        {% for provider in providers %}
-          <li class="provider">
-            <div class="row">
-              <div class="div2">
-                <img src="/files/{{ provider.avatar }}"/>
-
-                <div class="div1">
-                  <div class="component">
-                    <div >
-                      <strong>{{ provider.name }}</strong>
-                    </div>
-                    <div class="box2">
-                      <div class="formatText">
-                        {{ provider.complemento }}</div>
-                    </div>
+              <div class="div1">
+                <div class="component">
+                  <div >
+                    <strong>{{ provider.name }} - {{provider.total}}</strong>
+                  </div>
+                  <div class="box2">
+                    <div class="formatText">
+                      {{ provider.complemento }}</div>
                   </div>
                 </div>
+              </div>
 
-                <div class="link">
-                  <a href="/app/reservas/new/{{ provider.id }}">
-                    <i class="fas fa-plus"></i>
-                  </a>
-                </div>
+              <div class="link">
+
+                <ul class="dashboard-buttons">
+
+                  {% if (user.provider === true) %}
+                    <li class="content-aligth">
+                      <a href="/app/reservas/new/{{ provider.id }}">
+                        <i class="fas fa-edit"></i>
+                      </a>
+                    </li>
+                  {% endif %}
+
+                  <li class="content-aligth">
+                    <a href="/app/reservas/new/{{ provider.id }}">
+                      <i class="fas fa-plus"></i>
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
-          </li>
-        {% endfor %}
-      </ul>
-    {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+
   </div>
 {% endblock %}

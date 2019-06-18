@@ -50,9 +50,7 @@ class RedefinirSenhaController {
     User.update({ password_hash: passwordNovo, user }, { where: { id } })
 
     const tokenFinal = await Token.findByPk(tokenid)
-    console.log('IDIDIIDI: ', tokenFinal.id)
 
-    console.log('IDIDIIDI: ', tokenFinal)
     Token.update({ status: true, tokenFinal }, { where: { id: tokenFinal.id } })
 
     req.flash(
