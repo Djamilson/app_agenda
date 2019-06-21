@@ -9,7 +9,7 @@ class AvailableQuiosqueController {
     console.log('====>>> ', req.params.provider)
     const providers = await Reserva.findAll({
       where: {
-        provider_id: req.params.provider,
+        quiosque_id: req.params.provider,
         date: {
           [Op.between]: [
             dataAgora.startOf('month').format(),

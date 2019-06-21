@@ -79,7 +79,7 @@ class ScheduleController {
     const available = await Reserva.findAll({
       include: [
         { model: User, as: 'user' },
-        { model: Quiosque, as: 'provider' }
+        { model: Quiosque, as: 'quiosque' }
       ],
 
       where: {
@@ -109,9 +109,9 @@ class ScheduleController {
       const reservadopara = moment(reserva.date).format('DD/MM/YYYY')
       const hora = moment(now).format('HH:mm:ss')
 
-      const name = reserva.provider.name
-      const complemento = reserva.provider.complemento
-      const avatar = reserva.provider.avatar
+      const name = reserva.quiosque.name
+      const complemento = reserva.quiosque.complemento
+      const avatar = reserva.quiosque.avatar
 
       appointments.push({
         id: reserva.id,

@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
   Quiosque.associate = models => {
     Quiosque.hasMany(models.Reserva, {
       as: 'reserva',
-      foreignKey: 'provider_id'
+      foreignKey: 'quiosque_id',
+      foreignKeyConstraint: false
     })
   }
 

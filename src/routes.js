@@ -45,7 +45,11 @@ routes.post(
 
 routes.use('/app', authMiddleware)
 routes.use('/app/logout', controllers.SessionController.destroy)
-routes.get('/app/dashboard', controllers.DashboardController.index)
+routes.get(
+  '/app/dashboard',
+  controllers.DashboardQuiosqueController.index,
+  controllers.DashboardController.index
+)
 
 routes.get('/app/quiosque', controllers.QuiosqueController.index)
 routes.post(

@@ -39,10 +39,10 @@ class ReservaController {
       second: now.getSeconds(),
       millisecond: now.getMilliseconds()
     })
-    console.log(d3.format())
-    console.log(d3.format('HH:mm:ss'))
-    console.log(d3.format('ll'))
-    console.log(d3.format('YYYY-MM-DD'))
+    // console.log(d3.format())
+    // console.log(d3.format('HH:mm:ss'))
+    // console.log(d3.format('ll'))
+    // console.log(d3.format('YYYY-MM-DD'))
 
     let dateee = new Date(
       now.getFullYear(),
@@ -58,7 +58,7 @@ class ReservaController {
 
     await Reserva.create({
       user_id: id,
-      provider_id: provider,
+      quiosque_id: provider,
       date: d3.format(),
       status: true
     })

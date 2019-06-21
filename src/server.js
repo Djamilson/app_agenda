@@ -49,7 +49,7 @@ class App {
 
     this.express.use(express.static(path.resolve(__dirname, 'public')))
     this.express.use('/static', express.static('./node_modules/font-awesome'))
-   
+
     this.express.set('view engine', 'njk')
   }
 
