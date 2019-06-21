@@ -21,6 +21,9 @@ class DashboardController {
 
     let getQtRegistros = async function (id) {
       return new Promise((resolve, reject) => {
+        const dataAgoraa = moment(moment().valueOf())
+        console.log('Data agora para ser buscada: ', dataAgoraa)
+
         Reserva.count({
           where: {
             quiosque_id: id,
@@ -51,25 +54,40 @@ class DashboardController {
 
     const newArray = []
 
+    let now = new Date()
+    now.toLocaleString()
+
+    let d3 = moment({
+      year: now.getFullYear(),
+      month: now.getMonth(),
+      day: now.getDate() - 1,
+      hour: 21,
+      minute: 0,
+      second: 0,
+      millisecond: 0
+    })
+
     for (let i = 0; i < req.providers.length; i++) {
-      // let registro = await getQtRegistros(req.providers[i].id)
       let registro = 0
 
-      const dataAgoraa = moment(moment().valueOf())
-      console.log('Data agora para ser buscada: ', dataAgoraa)
+      const diaHoje_ = now.getDate()
 
       await Reserva.count({
         where: {
           quiosque_id: req.providers[i].id,
           date: {
-            [Op.between]: [
-              dataAgoraa.format(),
-              dataAgora.endOf('month').format()
-            ]
-          }
+            [Op.between]: [d3.format(), dataAgora.endOf('month').format()]
+          },
+          status: true
         }
       }).then(totalreservado => {
-        registro = ultimoDia - diaHoje - totalreservado + 1
+        console.log('Total reservado:', totalreservado)
+        console.log('Ultimo dia:', ultimoDia)
+        console.log('dia:', diaHoje_)
+
+        console.log('Final:', ultimoDia - diaHoje_ - totalreservado + 1)
+
+        registro = ultimoDia - diaHoje_ - totalreservado + 1
       })
 
       const add = {
@@ -87,9 +105,10 @@ class DashboardController {
       console.log(add)
       console.log('================== ')
 
-      console.log('BOA: ', newArray)
+      // console.log('BOA: ', newArray)
 
       if (req.providers.length === i + 1) {
+        console.log('BOA: ', newArray)
         res.render('dashboard', { providers: newArray, usuario })
       }
     }

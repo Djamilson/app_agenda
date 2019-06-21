@@ -6,7 +6,7 @@ class AvailableQuiosqueController {
   async index (req, res, next) {
     const dataAgora = moment(moment().valueOf())
 
-    console.log('====>>> ', req.params.provider)
+    // console.log('====>>> ', req.params.provider)
     const providers = await Reserva.findAll({
       where: {
         quiosque_id: req.params.provider,
@@ -15,14 +15,15 @@ class AvailableQuiosqueController {
             dataAgora.startOf('month').format(),
             dataAgora.endOf('month').format()
           ]
-        }
+        },
+        status: true
       }
     })
 
     const vetor = []
 
     providers.find((a, q) => {
-      console.log('Índice: ', q, 'Valor: ', moment(a.date).format('Y/MM/DD'))
+      // console.log('Índice: ', q, 'Valor: ', moment(a.date).format('Y/MM/DD'))
       vetor.push(moment(a.date).format('Y/MM/DD'))
     })
 
