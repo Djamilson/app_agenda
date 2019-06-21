@@ -15,12 +15,25 @@
 
     <input id="avatar" name="avatar" type="file"/>
 
-    <input type="text" name="name" placeholder="Nome completo">
+    <span class="inputWithIcon">
+      <input type="text" name="name" placeholder="Nome completo">
+      <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
+    </span>
 
-    <input type="email" name="email" placeholder="Seu e-mail">
+    <span class="inputWithIcon">
+      <i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i>
+      <input type="email" name="email" placeholder="Seu e-mail">
+    </span>
 
-    <input type="password" placeholder="Nova senha" name="password" id="password" required="required">
-    <input type="password" placeholder="Confirme Senha" name="confirma_password" id="confirm_password" required="required">
+    <span class="inputWithIcon">
+      <i class="fa fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
+      <input type="password" placeholder="Nova senha" name="password" id="password" required="required">
+    </span>
+
+    <span class="inputWithIcon">
+      <i class="fa fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
+      <input type="password" placeholder="Confirme Senha" name="confirma_password" id="confirm_password" required="required">
+    </span>
 
     <button type="submit">
       <i class="fas fa-check"></i>

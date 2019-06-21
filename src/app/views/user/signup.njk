@@ -19,7 +19,11 @@
       <br>
       <label>Nome</label>
       <input name="id" type="hidden" value="{{useredit.id}}">
-      <input type="text" name="name" placeholder="Nome completo" value="{{useredit.name}}">
+
+      <span class="inputWithIcon">
+        <input type="text" name="name" placeholder="Nome completo" value="{{useredit.name}}">
+        <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
+      </span>
 
       <button type="submit">
         <i class="fas fa-check"></i>

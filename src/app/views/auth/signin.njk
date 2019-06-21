@@ -6,10 +6,18 @@
 
     {% include "_partials/flash.njk" %}
 
-    <input type="email" name="email" placeholder="Seu e-mail">
-    <input type="password" name="password" placeholder="Senha secreta">
+    <span class="inputWithIcon">
+      <i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i>
+      <input type="email" name="email" placeholder="Seu e-mail">
+    </span>
 
-    <button type="submit">  <i class="fas fa-lock"></i>&nbsp;&nbsp;&nbsp;Entrar</button>
+    <span class="inputWithIcon">
+      <i class="fa fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
+      <input type="password" name="password" placeholder="Senha secreta">
+    </span>
+
+    <button type="submit">
+      <i class="fas fa-lock"></i>&nbsp;&nbsp;&nbsp;Entrar</button>
 
     <ul class="social-buttons">
       <li>

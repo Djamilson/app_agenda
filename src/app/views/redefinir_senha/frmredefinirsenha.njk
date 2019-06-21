@@ -18,8 +18,15 @@
       <input name="id" type="hidden" value="{{user.id}}">
       <input name="tokenid" type="hidden" value="{{tokenn.id}}">
 
-      <input type="password" placeholder="Nova senha" name="password" id="password" required="required">
-      <input type="password" placeholder="Confirme Senha" name="confirma_password" id="confirm_password" required="required">
+      <span class="inputWithIcon">
+        <i class="fa fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
+        <input type="password" placeholder="Nova senha" name="password" id="password" required="required">
+      </span>
+
+      <span class="inputWithIcon">
+        <i class="fa fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
+        <input type="password" placeholder="Confirme Senha" name="confirma_password" id="confirm_password" required="required">
+      </span>
 
       <button type="submit">
         <i class="fas fa-check"></i>
