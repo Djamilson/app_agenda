@@ -18,6 +18,12 @@ module.exports = {
         defaultValue: false,
         type: Sequelize.BOOLEAN
       },
+      horadareserva: { allowNull: false, type: Sequelize.STRING },
+      statusdeuso: {
+        allowNull: false,
+        defaultValue: false,
+        type: Sequelize.BOOLEAN
+      },
       user_id: {
         type: Sequelize.INTEGER,
         references: {

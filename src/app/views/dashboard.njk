@@ -18,33 +18,49 @@
           &nbsp;&nbsp;&nbsp;Sair</a>
       </li>
     </ul>
+    {% if (user.provider === true) %}
 
-    <ul class="social-buttons">
+      <ul class="social-buttons">
+        <li>
+          <a href="/app/agendamento/diarios">
+            <i class="fas fa-calendar-check fa-lg fa-fw" role="presentation"></i>
+            &nbsp;&nbsp;&nbsp;Locação diárias</a>
+        </li>
 
-      {% if (user.provider === true) %}
+      </ul>
+
+      <ul class="social-buttons">
         <li>
           <a href="/app/quiosque" class="editar">
-            <i class="fas fa-edit"></i>&nbsp;&nbsp;&nbsp; Cadastrar Quiosque</a>
+            <i class="fas fa fa-wpforms fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp; Cadastrar Quiosque</a>
         </li>
         <li>
           <a href="/app/user" class="editar">
-            <i class="fas fa-edit"></i>&nbsp;&nbsp;&nbsp; Cadastrar Usuário</a>
+            <i class="fas fa fa-edit fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp; Quiosque Inativos</a>
         </li>
-      {% endif %}
+
+        <li>
+          <a href="/app/user" class="editar">
+            <i class="fas fa fa-wpforms fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp; Cadastrar Usuário</a>
+        </li>
+      </ul>
+
+    {% endif %}
+    <ul class="social-buttons">
 
       <li>
         <a href="/app/user/edit/{{ user.id }}" class="editar">
-          <i class="fas fa-edit"></i>
+          <i class="fas fa-edit fa-lg fa-fw"></i>
           &nbsp;&nbsp;&nbsp;Editar Perfil</a>
       </li>
       <li>
         <a href="/app/user/edit/senha/{{ user.id }}" class="editar">
-          <i class="fas fa-edit"></i>
+          <i class="fas fa-edit fa-lg fa-fw"></i>
           &nbsp;&nbsp;&nbsp;Editar Senha</a>
       </li>
       <li>
         <a href="/app/schedule">
-          <i class="fas fa-calendar-check" role="presentation"></i>
+          <i class="fas fa-calendar-check fa-lg fa-fw" role="presentation"></i>
           &nbsp;&nbsp;&nbsp;Meus agendamentos</a>
       </li>
     </ul>
@@ -64,7 +80,9 @@
               <div class="div1">
                 <div class="component">
                   <div >
-                    <strong>{{ provider.name }} - {{provider.total}}</strong>
+                    <strong>{{ provider.name }}
+                      -
+                      {{provider.total}}</strong>
                   </div>
                   <div class="box2">
                     <div class="formatText">
@@ -79,7 +97,7 @@
 
                   {% if (user.provider === true) %}
                     <li class="content-aligth">
-                      <a href="/app/reservas/new/{{ provider.id }}">
+                      <a href="/app/quiosque/editar/{{ provider.id }}">
                         <i class="fas fa-edit"></i>
                       </a>
                     </li>

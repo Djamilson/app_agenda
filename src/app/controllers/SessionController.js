@@ -9,7 +9,6 @@ class SessionController {
     const { email, password } = req.body
 
     const user = await User.findOne({ where: { email } })
-    console.log('====> ', user)
 
     if (!user) {
       console.log('Usuário não encontrado')

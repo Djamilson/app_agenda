@@ -40,7 +40,8 @@ class DashboardController {
             [Op.between]: [d3.format(), dataAgora.endOf('month').format()]
           },
           status: true
-        }
+        },
+        order: [['date', 'ASC']]
       }).then(totalreservado => {
         registro = ultimoDia - diaHoje_ - totalreservado + 1
       })

@@ -52,6 +52,7 @@ class UserController {
 
     return res.render('user/signup', { useredit, usuario })
   }
+
   async editarsenha (req, res) {
     const { id } = req.params
     const useredit = await User.findByPk(id)

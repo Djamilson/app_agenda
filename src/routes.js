@@ -58,6 +58,13 @@ routes.post(
   controllers.QuiosqueController.store
 )
 
+routes.get('/app/quiosque/editar/:id', controllers.QuiosqueController.editar)
+routes.post(
+  '/app/quiosque/editar',
+  upload.single('avatar'),
+  controllers.QuiosqueController.update
+)
+
 routes.get(
   '/app/appointments/new/:provider',
   controllers.AppointmentController.create
@@ -70,6 +77,11 @@ routes.post(
 routes.get('/app/available/:provider', controllers.AvailableController.index)
 routes.get('/app/schedule/delete/:id', controllers.ScheduleController.delete)
 routes.get('/app/schedule', controllers.ScheduleController.index)
+
+routes.get(
+  '/app/agendamento/diarios',
+  controllers.AgendamentoDiariosController.index
+)
 
 routes.get('/app/user', controllers.UserController.index)
 routes.post(

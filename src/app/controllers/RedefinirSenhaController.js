@@ -34,11 +34,6 @@ class RedefinirSenhaController {
     const { password, id, tokenid } = req.body
 
     const user = await User.findByPk(id)
-    console.log('============================')
-    console.log('password', password)
-    console.log('ID', id)
-
-    console.log('============================:', tokenid)
     // Make sure the user has been verified
     if (!user) {
       req.flash('error', 'Não foi possível redefinir a senha!')

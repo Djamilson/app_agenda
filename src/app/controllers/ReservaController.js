@@ -15,52 +15,47 @@ class ReservaController {
     // const datee = moment(moment(date, 'DD/MM/YYYY').valueOf()).format()
     const vetorData = date.split('/')
 
-    console.log('===> ', date)
+    let dataParaBusca = moment({
+      year: vetorData[2],
+      month: vetorData[1] - 1,
+      day: vetorData[0],
+      hour: 21,
+      minute: 0,
+      second: 0,
+      millisecond: 0
+    })
+
+    const reserva = await Reserva.findOne({
+      where: { status: true, quiosque_id: provider, date: dataParaBusca }
+    })
+
+    if (reserva) {
+      req.flash('error', 'Não foi possível efetuar a reserva, tente novamente!')
+      return res.redirect('/app/dashboard')
+    }
+
     let now = new Date()
     now.toLocaleString()
-
-    // the hour in UTC+0 time zone (London time without daylight savings)
-    console.log('===============================') // shows current date/time
-    console.log('=====> Anos: ', vetorData[2])
-    console.log('=====> Mês: ', vetorData[1] - 1)
-    console.log('====>Dia: ', vetorData[0])
-    console.log('====>Hora ', now.getHours())
-    console.log('====>Minutos ', now.getMinutes())
-    console.log('====>Segundos ', now.getSeconds())
-    console.log('====>Milliseconds ', now.getMilliseconds())
-    console.log('===============================') // shows current date/time
 
     let d3 = moment({
       year: vetorData[2],
       month: vetorData[1] - 1,
-      day: vetorData[0],
-      hour: now.getHours(),
-      minute: now.getMinutes(),
-      second: now.getSeconds(),
-      millisecond: now.getMilliseconds()
+      day: vetorData[0] - 1,
+      hour: 21,
+      minute: 0,
+      second: 0,
+      millisecond: 0
     })
-    // console.log(d3.format())
-    // console.log(d3.format('HH:mm:ss'))
-    // console.log(d3.format('ll'))
-    // console.log(d3.format('YYYY-MM-DD'))
 
-    let dateee = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate(),
-      now.getHours(),
-      now.getMinutes(),
-      now.getSeconds(),
-      now.getMilliseconds()
+    console.log(
+      `horaorao :: ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
     )
-    console.log(dateee)
-    console.log('Data final:', d3.format())
-
     await Reserva.create({
       user_id: id,
       quiosque_id: provider,
-      date: d3.format(),
-      status: true
+      date: moment.utc(d3).format(),
+      status: true,
+      horadareserva: `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
     })
     req.flash('success', 'Reserva efetuada com sucesso!')
     return res.redirect('/app/dashboard')

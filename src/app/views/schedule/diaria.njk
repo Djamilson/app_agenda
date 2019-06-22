@@ -1,0 +1,115 @@
+{% extends "_layouts/default.njk" %}
+
+{% block body %}
+  <div id="hour">
+    <div class="content">
+      <div class="auth-wrapper">
+        <div >
+          <img src="/files/{{ user.avatar}}" height="24"/>
+        </div>
+      </div>
+      <strong>Olá,
+        {{ usuario.name}}</strong>
+
+      <a href="/app/dashboard" class="logout">
+        <i class="fas fa-arrow-left"></i>
+        &nbsp;&nbsp;&nbsp;Voltar</a>
+      <br>
+      <strong>Agendamentos díarios</strong>
+
+      {% include "_partials/flash.njk" %}
+      <ul class="providers">
+        {% for appointment in appointments %}
+          <li class="provider">
+            <div class="row">
+              <div class="div2">
+                <img src="/files/{{ appointment.avatar }}"/></div>
+
+              <div class="div1">
+                <div class="component">
+                  <div >
+                    <strong>{{ appointment.name }}
+                    </strong>
+                  </div>
+                  <div class="box">
+                    <div class="div2">
+                      <div class="formatText">
+                        Reservado para: &nbsp;&nbsp;&nbsp;
+                      </div>
+                      <div>{{ appointment.reservadopara }}</div>
+                    </div>
+                    <div class="div2">
+                      <div class="formatText">
+                        Reservado em: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      </div>
+                      <div>
+                        {{ appointment.reservadoem }}</div>
+                    </div>
+                    <div class="div2">
+                      <div class="formatText">
+                        Hora da reserva: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      </div>
+                      <div>{{ appointment.hora }}</div>
+                    </div>
+
+                    <div class="div2">
+                      <div class="formatText">
+                        {{ appointment.complemento }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="link">
+
+                <button class="btn btn-danger remove" value="{{ appointment.id }}">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+
+      </div>
+    </div>
+    <script>
+
+      $(document).on("click", ".remove", function (e) {
+        // alert($(event.target).text());
+        var id = $(event.target).val();
+
+        bootbox.confirm({
+          title: "Atenção!",
+          message: "Tem certeza que deseja remover essa reserva?",
+          buttons: {
+            cancel: {
+              label: '<i class="fa fa-times"></i> Não'
+            },
+            confirm: {
+              label: '<i class="fa fa-check"></i> Sim',
+              className: 'btn-primary'
+            }
+          },
+          callback: function (result) {
+            console.log($(event.target).val());
+            console.log(`This was logged in the callback: {{ appointment.id}}` + result);
+
+            if (result) {
+
+              fetch(`/app/schedule/delete/${id}`).then(function (response) {
+                console.log("response=====", response)
+                response
+                  .text()
+                  .then(function (html) {
+                    document
+                      .getElementById('hour')
+                      .innerHTML = html
+                  })
+              })
+            }
+          }
+        });
+      });
+    </script>
+
+  {% endblock %}

@@ -72,9 +72,25 @@ class ScheduleController {
   }
 
   async index (req, res) {
-    console.log('Sessao: index', req.session.user.id)
+    let now = new Date()
+    now.toLocaleString()
 
-    const dataAgora = moment(moment().valueOf())
+    let d3 = moment({
+      year: now.getFullYear(),
+      month: now.getMonth(),
+      day: now.getDate() - 1,
+      hour: 21,
+      minute: 0,
+      second: 0,
+      millisecond: 0
+    })
+
+    const dataAgora = moment(d3.valueOf())
+    // console.log('ppppp: ', moment.utc(dataAgora).format('YYYY-MM-DD HH:mm:ss'))
+
+    //  console.log('ppppp: ', moment.utc(d3).format('YYYY-MM-DD HH:mm:ss'))
+
+    const date = moment(parseInt(dataAgora))
 
     const available = await Reserva.findAll({
       include: [
@@ -83,20 +99,16 @@ class ScheduleController {
       ],
 
       where: {
-        user_id: req.session.user.id,
         status: true,
         date: {
-          [Op.between]: [
-            dataAgora.startOf('month').format(),
-            dataAgora.endOf('month').format()
-          ]
+          [Op.between]: [d3.startOf('day').format(), d3.endOf('day').format()]
         }
       },
       order: [['date', 'ASC']]
     })
 
     if (!available) {
-      req.flash('error', 'Você não tem reservas ainda!')
+      req.flash('error', 'Não temos agendamentos para hoje!')
       return res.redirect('/app/dashboard')
     }
 
@@ -127,7 +139,7 @@ class ScheduleController {
     const name = await req.session.user.name.split(' ')
     const usuario = { ...req.session.user, name: name[0] }
 
-    return res.render('schedule/index', { appointments, usuario })
+    return res.render('schedule/diaria', { appointments, usuario })
   }
 }
 
