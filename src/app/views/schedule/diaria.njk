@@ -71,24 +71,28 @@
 
                 <ul class="dashboard-buttons">
 
-                  <li class="content-aligth">
-                    <a class="btn btn-secondary btn-lg btn-block" href="/app/agendamento/diarios/{{ appointment.id }}">
-                      <i class="fas fa-check"></i>
-                    </a>
-                  </li>
+                  {% if appointment.statusdeuso != true %}
 
-                  <li class="content-aligth">
+                    <li class="content-aligth">
+                      <a class="btn btn-secondary btn-lg btn-block" href="/app/agendamento/diarios/{{ appointment.id }}">
+                        <i class="fas fa-check"></i>
+                      </a>
+                    </li>
+                  {% else %}
 
-                    <form action="/app/agendamento/confirmacancelamento" method="post" id="myForm">
-                      <input type="hidden" name="id" value="{{ appointment.id }}">
+                    <li class="content-aligth">
 
-                      <span type="button" onclick="lockFunction()" class="btn btn-danger btn-block">
-                        <i class="fas fa fa-times"></i>
-                      </span>
+                      <form action="/app/agendamento/confirmacancelamento" method="post" id="myForm">
+                        <input type="hidden" name="id" value="{{ appointment.id }}">
 
-                    </form>
+                        <span type="button" onclick="lockFunction()" class="btn btn-danger btn-block">
+                          <i class="fas fa fa-times"></i>
+                        </span>
 
-                  </li>
+                      </form>
+
+                    </li>
+                  {% endif %}
                 </ul>
               </div>
             </li>
@@ -97,11 +101,9 @@
 
       </div>
     </div>
-    <script src="/public/js/javascript-client.js" type="text/javascript"></script>
     <script>
 
       function lockFunction() {
-
         bootbox.confirm({
           title: "Atenção!",
           message: "<i class='fas fa-exclamation-triangle fa-lg fa-fw'></i> Tem certeza que deseja remover essa reserva?",
@@ -121,56 +123,14 @@
 
           callback: function (result) {
             if (result === true) {
-
               document
                 .getElementById("myForm")
                 .submit();
 
             }
-            console.log('This was logged in the callback: ' + result);
           }
         });
       }
-
-      $(document).on("click", ".remove", function (e) {
-        var id = $(event.target).val();
-
-        bootbox.confirm({
-          title: "Atenção!",
-          message: "<i class='fas fa-exclamation-triangle fa-lg fa-fw'></i> Tem certeza que deseja remover essa reserva?",
-          size: "small",
-          onEscape: true,
-          backdrop: true,
-          buttons: {
-            cancel: {
-              className: 'btn-danger',
-              label: '<i class="fa fa-times"></i> Não'
-            },
-            confirm: {
-              className: 'btn-success',
-              label: '<i class="fa fa-check"></i> Sim'
-            }
-          },
-          callback: function (result) {
-
-            if (result) {
-
-              location.href = `/app/agendamento/confirmacancelamento/${id}`;
-              /*
-              fetch(`/app/agendamento/confirmacancelamento/${id}`).then(function (response) {
-                console.log("response=====", response)
-                response
-                  .text()
-                  .then(function (html) {
-                    document
-                      .getElementById('hour')
-                      .innerHTML = html
-                  })
-              })*/
-            }
-          }
-        });
-      });
     </script>
 
   {% endblock %}
