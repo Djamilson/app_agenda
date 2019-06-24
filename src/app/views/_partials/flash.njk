@@ -1,7 +1,8 @@
 {% for message in flashSuccess %}
 
   <span class="alert alert-success">
-    <span class="closebtn">&times;</span>
+    <span class="closebtn" data-dismiss="alert">&times;</span>
+
     <i class="fas fa-check"></i>
     <strong>Sucesso!</strong>
     <hr class="message-inner-separator">
@@ -14,7 +15,8 @@
 {% for message in flashError %}
 
   <span class="alert alert-danger">
-    <span class="closebtn">&times;</span>
+    <span class="closebtn" data-dismiss="alert">&times;</span>
+
     <i class="fas fa-exclamation-triangle"></i>
     <strong>Atenção!</strong>
     <hr class="message-inner-separator">

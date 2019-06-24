@@ -72,18 +72,33 @@
 
     <ul class="providers">
       {% for provider in providers %}
-        <li class="provider">
+        <li class="provider
+
+           {% if provider.total == 0 %} alert alert-warning {% endif %}
+      ">
           <div class="row">
             <div class="div2">
               <img src="/files/{{ provider.avatar }}"/>
 
               <div class="div1">
                 <div class="component">
-                  <div >
-                    <strong>{{ provider.name }}
-                      -
-                      {{provider.total}}</strong>
-                  </div>
+
+                  <span >
+                    <i class="fas fa fa-umbrella"></i>
+                    <strong>&nbsp;&nbsp;&nbsp;{{ provider.name }}</strong>
+                    <hr class="message-inner-separator">
+                    <p>
+                      {% if provider.total != 0 %}
+                        Total disponível:
+                        {{provider.total}}
+                      {% endif %}
+
+                      {% if provider.total == 0 %}
+                        Não temos mais datas disponíveis
+                      {% endif %}
+
+                    </p>
+                  </span>
                   <div class="box2">
                     <div class="formatText">
                       {{ provider.complemento }}</div>
@@ -103,11 +118,14 @@
                     </li>
                   {% endif %}
 
-                  <li class="content-aligth">
-                    <a href="/app/reservas/new/{{ provider.id }}">
-                      <i class="fas fa-plus"></i>
-                    </a>
-                  </li>
+                  {% if provider.total != 0 %}
+
+                    <li class="content-aligth">
+                      <a href="/app/reservas/new/{{ provider.id }}">
+                        <i class="fas fa-plus"></i>
+                      </a>
+                    </li>
+                  {% endif %}
                 </ul>
               </div>
             </div>

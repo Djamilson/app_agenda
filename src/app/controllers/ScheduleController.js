@@ -32,7 +32,8 @@ class ScheduleController {
             dataAgora.endOf('month').format()
           ]
         }
-      }
+      },
+      order: [['date', 'ASC']]
     })
 
     if (!available) {

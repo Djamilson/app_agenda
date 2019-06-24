@@ -16,7 +16,13 @@ button {
 }
 
 body {
-  background: #7159c1;
+  /*background: #7159c1;*/
+  background: url(images/download.jpeg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
   text-rendering: optimizelegibility !important;
@@ -247,6 +253,8 @@ body {
 .auth-wrapper form input[type="file"] {
   display: none;
 }
+
+
 
 .auth-wrapper form button {
   height: 40px;
@@ -505,6 +513,19 @@ body {
   justify-content: flex-end;
   align-items: center;
 }
+
+.content-aligth form span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  padding: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #fff;
+
+}
+
 .main-wrapper .content a.logout {
   background: #de6d6d;
   text-decoration: none;

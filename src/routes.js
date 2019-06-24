@@ -82,6 +82,23 @@ routes.get(
   '/app/agendamento/diarios',
   controllers.AgendamentoDiariosController.index
 )
+routes.get(
+  '/app/agendamento/diarios/:id',
+  controllers.AgendamentoDiariosController.confirmaAgendamento
+)
+
+routes.get(
+  '/app/agendamento/confirmacancelamento/:id',
+  controllers.AgendamentoDiariosController.cancelarAgendamento
+)
+
+routes.post(
+  '/app/agendamento/confirmacancelamento',
+  controllers.AgendamentoDiariosController.cancelarAgendamento
+)
+routes.post('/profile', function (req, res) {
+  console.log('PPPPPP: ', req.body)
+})
 
 routes.get('/app/user', controllers.UserController.index)
 routes.post(

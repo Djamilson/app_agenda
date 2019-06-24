@@ -15,15 +15,24 @@ class ReservaController {
     // const datee = moment(moment(date, 'DD/MM/YYYY').valueOf()).format()
     const vetorData = date.split('/')
 
-    let dataParaBusca = moment({
-      year: vetorData[2],
-      month: vetorData[1] - 1,
-      day: vetorData[0],
-      hour: 21,
-      minute: 0,
-      second: 0,
-      millisecond: 0
-    })
+    console.log('Id do Quiosque', provider)
+    console.log('Id do Usuario', id)
+
+    console.log('Data', date)
+
+    let dataParaBusca = moment
+      .utc({
+        year: vetorData[2],
+        month: vetorData[1] - 1,
+        day: vetorData[0],
+        hour: 0,
+        minute: 0,
+        second: 0,
+        millisecond: 0
+      })
+      .format()
+
+    console.log('Data para busca', dataParaBusca)
 
     const reserva = await Reserva.findOne({
       where: { status: true, quiosque_id: provider, date: dataParaBusca }
@@ -37,6 +46,19 @@ class ReservaController {
     let now = new Date()
     now.toLocaleString()
 
+    let d3 = moment
+      .utc({
+        year: vetorData[2],
+        month: vetorData[1] - 1,
+        day: vetorData[0],
+        hour: 0,
+        minute: 0,
+        second: 0,
+        millisecond: 0
+      })
+      .format()
+
+    /*
     let d3 = moment({
       year: vetorData[2],
       month: vetorData[1] - 1,
@@ -45,7 +67,7 @@ class ReservaController {
       minute: 0,
       second: 0,
       millisecond: 0
-    })
+    }) */
 
     console.log(
       `horaorao :: ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
@@ -53,7 +75,7 @@ class ReservaController {
     await Reserva.create({
       user_id: id,
       quiosque_id: provider,
-      date: moment.utc(d3).format(),
+      date: d3,
       status: true,
       horadareserva: `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
     })

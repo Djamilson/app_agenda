@@ -28,10 +28,12 @@
 
               <div class="div1">
                 <div class="component">
-                  <div >
-                    <strong>{{ appointment.name }}
-                    </strong>
-                  </div>
+
+                  <span>
+                    <strong>{{ appointment.name }}</strong>
+                    <hr class="message-inner-separator">
+                  </span>
+
                   <div class="box">
                     <div class="div2">
                       <div class="formatText">
@@ -61,7 +63,6 @@
                 </div>
               </div>
               <div class="link">
-
                 <button class="btn btn-danger remove" value="{{ appointment.id }}">
                   <i class="fas fa-trash-alt"></i>
                 </button>
@@ -82,13 +83,17 @@
         bootbox.confirm({
           title: "Atenção!",
           message: "Tem certeza que deseja remover essa reserva?",
+          size: "small",
+          onEscape: true,
+          backdrop: true,
           buttons: {
             cancel: {
+              className: 'btn-danger',
               label: '<i class="fa fa-times"></i> Não'
             },
             confirm: {
-              label: '<i class="fa fa-check"></i> Sim',
-              className: 'btn-primary'
+              className: 'btn-success',
+              label: '<i class="fa fa-check"></i> Sim'
             }
           },
           callback: function (result) {
