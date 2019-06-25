@@ -1,0 +1,16 @@
+.fa-exclamation-triangle {
+  color: salmon;
+}
+
+/* Add this to your CSS */
+.tooltip-azul {
+  --balloon-color: #36c4ef;
+}
+
+.tooltip-big-text {
+  --balloon-font-size: 20px;
+}
+
+.tooltip-slide {
+  --balloon-move: 30px;
+}

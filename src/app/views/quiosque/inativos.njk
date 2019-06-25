@@ -1,0 +1,106 @@
+{% extends "_layouts/default.njk" %}
+
+{% block body %}
+  <div class="content">
+
+    <div class="auth-wrapper">
+      <div >
+        <img src="/files/{{ user.avatar}}" height="24"/>
+      </div>
+    </div>
+    <strong>Olá,
+      {{ usuario.name}}</strong>
+
+    <a href="/app/dashboard" class="logout">
+      <i class="fas fa-chevron-left"></i>
+      &nbsp;&nbsp;&nbsp;Voltar</a>
+
+    <br>
+    {% include "_partials/flash.njk" %}
+
+    <p>Inativos:</p>
+
+    <ul class="providers">
+      {% for provider in providers %}
+        <li class="provider
+
+           {% if provider.total == 0 %} alert alert-warning {% endif %}
+      ">
+          <div class="row">
+            <div class="div2">
+              <img src="/files/{{ provider.avatar }}"/>
+
+              <div class="div1">
+                <div class="component">
+
+                  <span >
+                    <i class="fas fa fa-umbrella"></i>
+                    <strong>&nbsp;&nbsp;&nbsp;{{ provider.name }}</strong>
+                    <hr class="message-inner-separator">
+                    <p>
+                      Está inativo
+                    </p>
+                  </span>
+                  <div class="box2">
+                    <div class="formatText">
+                      {{ provider.complemento }}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="link">
+
+                <ul class="dashboard-buttons">
+                  <li class="content-aligth">
+                    <form action="/app/quiosque/inativos/editar/" method="post" id="myForm_{{ provider.id }}">
+                      <input type="hidden" name="id" value="{{ provider.id }}">
+
+                      <span type="button" onclick="lockFunction(this)" class="btn btn-success btn-block" id="{{ provider.id }}">
+                        <i class="fas fa-check"></i>
+                      </span>
+
+                    </form>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <script>
+
+    function lockFunction(e) {
+      var id = e.id;
+      bootbox.confirm({
+        title: "Atenção!",
+        message: "<i class='fas fa-exclamation-triangle fa-lg fa-fw'></i> Tem certeza que deseja ativar essa opção de reserva?",
+        size: "small",
+        onEscape: true,
+        backdrop: true,
+        buttons: {
+          cancel: {
+            className: 'btn-danger',
+            label: '<i class="fa fa-times"></i> Não'
+          },
+          confirm: {
+            className: 'btn-success',
+            label: '<i class="fa fa-check"></i> Sim'
+          }
+        },
+
+        callback: function (result) {
+          if (result === true) {
+            document
+              .getElementById(`myForm_${id}`)
+              .submit();
+
+          }
+        }
+      });
+    }
+  </script>
+
+{% endblock %}

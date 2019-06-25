@@ -51,6 +51,11 @@ routes.get(
   controllers.DashboardController.index
 )
 
+routes.get(
+  '/app/quiosque/inativos',
+  controllers.QuiosqueInativosController.index
+)
+
 routes.get('/app/quiosque', controllers.QuiosqueController.index)
 routes.post(
   '/app/quiosque',
@@ -58,11 +63,21 @@ routes.post(
   controllers.QuiosqueController.store
 )
 
+routes.post(
+  '/app/dashboard/desabilitarquiosque',
+  controllers.DashboardController.desabilitarQuiosque
+)
+
 routes.get('/app/quiosque/editar/:id', controllers.QuiosqueController.editar)
 routes.post(
   '/app/quiosque/editar',
   upload.single('avatar'),
   controllers.QuiosqueController.update
+)
+
+routes.post(
+  '/app/quiosque/inativos/editar',
+  controllers.QuiosqueInativosController.update
 )
 
 routes.get(
@@ -75,7 +90,7 @@ routes.post(
 )
 
 routes.get('/app/available/:provider', controllers.AvailableController.index)
-routes.get('/app/schedule/delete/:id', controllers.ScheduleController.delete)
+routes.post('/app/schedule/delete', controllers.ScheduleController.delete)
 routes.get('/app/schedule', controllers.ScheduleController.index)
 
 routes.get(
@@ -96,9 +111,6 @@ routes.post(
   '/app/agendamento/confirmacancelamento',
   controllers.AgendamentoDiariosController.cancelarAgendamento
 )
-routes.post('/profile', function (req, res) {
-  console.log('PPPPPP: ', req.body)
-})
 
 routes.get('/app/user', controllers.UserController.index)
 routes.post(

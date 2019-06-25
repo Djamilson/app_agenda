@@ -12,7 +12,7 @@
         {{ usuario.name}}</strong>
 
       <a href="/app/dashboard" class="logout">
-        <i class="fas fa-arrow-left"></i>
+        <i class="fas fa-chevron-left"></i>
         &nbsp;&nbsp;&nbsp;Voltar</a>
       <br>
       <strong>Agendamentos diários</strong>
@@ -74,7 +74,8 @@
                   {% if appointment.statusdeuso != true %}
 
                     <li class="content-aligth">
-                      <a class="btn btn-secondary btn-lg btn-block" href="/app/agendamento/diarios/{{ appointment.id }}">
+                      <a aria-label="Confirmar agendamento" data-balloon-pos="left"
+                      class="btn btn-secondary btn-lg btn-block tooltip-azul checar" href="/app/agendamento/diarios/{{ appointment.id }}">
                         <i class="fas fa-check"></i>
                       </a>
                     </li>
@@ -82,10 +83,14 @@
 
                     <li class="content-aligth">
 
-                      <form action="/app/agendamento/confirmacancelamento" method="post" id="myForm">
+                      <form action="/app/agendamento/confirmacancelamento" method="post" id="myForm_{{ appointment.id }}">
                         <input type="hidden" name="id" value="{{ appointment.id }}">
 
-                        <span type="button" onclick="lockFunction()" class="btn btn-danger btn-block">
+                        <span type="button" onclick="lockFunction(this)"
+                        id="{{ appointment.id }}"
+                        aria-label="Cancela confirmação de presença!"
+                        data-balloon-pos="left"
+                        class="btn btn-danger btn-block tooltip-azul">
                           <i class="fas fa fa-times"></i>
                         </span>
 
@@ -103,7 +108,8 @@
     </div>
     <script>
 
-      function lockFunction() {
+      function lockFunction(e) {
+        var id = e.id;
         bootbox.confirm({
           title: "Atenção!",
           message: "<i class='fas fa-exclamation-triangle fa-lg fa-fw'></i> Tem certeza que deseja remover essa reserva?",
@@ -124,9 +130,8 @@
           callback: function (result) {
             if (result === true) {
               document
-                .getElementById("myForm")
+                .getElementById(`myForm_${id}`)
                 .submit();
-
             }
           }
         });

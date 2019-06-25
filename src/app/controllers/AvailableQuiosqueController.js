@@ -6,7 +6,6 @@ class AvailableQuiosqueController {
   async index (req, res, next) {
     const dataAgora = moment(moment().valueOf())
 
-    // console.log('====>>> ', req.params.provider)
     const providers = await Reserva.findAll({
       where: {
         quiosque_id: req.params.provider,

@@ -26,7 +26,7 @@ class UserController {
 
   async update (req, res) {
     const { id, name, provider, complemento } = req.body
-    console.log('Status do quiosque: ', provider)
+
     const quiosque = await Quiosque.findByPk(id)
     let status = false
 

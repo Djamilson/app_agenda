@@ -159,7 +159,6 @@ hr.message-inner-separator {
   flex-grow: 1;
 }
 
-
 .dashboard-buttons a {
   display: flex;
   justify-content: center;
@@ -183,7 +182,6 @@ hr.message-inner-separator {
 }
 .dashboard-buttons button i {
   padding: 10px;
-
 }
 
 .dashboard-buttons li {
@@ -297,14 +295,12 @@ input[type="email"]:focus {
   padding-left: 40px;
 }
 
-
-
 .modal {
   text-align: center;
-  padding: 0!important;
+  padding: 0 !important;
 }
 .modal:before {
-  content: '';
+  content: "";
   display: inline-block;
   height: 100%;
   vertical-align: middle;
@@ -316,6 +312,8 @@ input[type="email"]:focus {
   vertical-align: middle;
 }
 .modal-footer button {
-  float:right;
+  float: right;
   margin-left: 10px;
 }
+
+

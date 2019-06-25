@@ -15,11 +15,6 @@ class ReservaController {
     // const datee = moment(moment(date, 'DD/MM/YYYY').valueOf()).format()
     const vetorData = date.split('/')
 
-    console.log('Id do Quiosque', provider)
-    console.log('Id do Usuario', id)
-
-    console.log('Data', date)
-
     let dataParaBusca = moment
       .utc({
         year: vetorData[2],
@@ -31,8 +26,6 @@ class ReservaController {
         millisecond: 0
       })
       .format()
-
-    console.log('Data para busca', dataParaBusca)
 
     const reserva = await Reserva.findOne({
       where: { status: true, quiosque_id: provider, date: dataParaBusca }

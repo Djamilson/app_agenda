@@ -12,7 +12,7 @@
         {{ usuario.name}}</strong>
 
       <a href="/app/dashboard" class="logout">
-        <i class="fas fa-arrow-left"></i>
+        <i class="fas fa-chevron-left"></i>
         &nbsp;&nbsp;&nbsp;Voltar</a>
       <br>
       <strong>Seus agendamentos</strong>
@@ -63,9 +63,16 @@
                 </div>
               </div>
               <div class="link">
-                <button class="btn btn-danger remove" value="{{ appointment.id }}">
-                  <i class="fas fa-trash-alt"></i>
-                </button>
+                <form action="/app/schedule/delete/" method="post" id="myForm_{{appointment.id}}">
+                  <input type="hidden" name="id" value="{{ appointment.id }}">
+
+                  <span aria-label="Cancelar agendamento" data-balloon-pos="left"
+                  type="button" id="{{ appointment.id }}" onclick="lockFunction(this)"
+                  class="btn btn-danger btn-block tooltip-azul">
+                    <i class="fas fa fa-trash-alt"></i>
+                  </span>
+
+                </form>
 
               </div>
             </li>
@@ -76,13 +83,12 @@
     </div>
     <script>
 
-      $(document).on("click", ".remove", function (e) {
-        // alert($(event.target).text());
-        var id = $(event.target).val();
+      function lockFunction(e) {
+        var id = e.id;
 
         bootbox.confirm({
           title: "Atenção!",
-          message: "Tem certeza que deseja remover essa reserva?",
+          message: "<i class='fas fa-exclamation-triangle fa-lg fa-fw'></i> Tem certeza que deseja remover essa reserva?",
           size: "small",
           onEscape: true,
           backdrop: true,
@@ -96,26 +102,16 @@
               label: '<i class="fa fa-check"></i> Sim'
             }
           },
+
           callback: function (result) {
-            console.log($(event.target).val());
-            console.log(`This was logged in the callback: {{ appointment.id}}` + result);
-
-            if (result) {
-
-              fetch(`/app/schedule/delete/${id}`).then(function (response) {
-                console.log("response=====", response)
-                response
-                  .text()
-                  .then(function (html) {
-                    document
-                      .getElementById('hour')
-                      .innerHTML = html
-                  })
-              })
+            if (result === true) {
+              document
+                .getElementById(`myForm_${id}`)
+                .submit();
             }
           }
         });
-      });
+      }
     </script>
 
   {% endblock %}
