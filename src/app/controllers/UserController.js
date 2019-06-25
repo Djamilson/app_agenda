@@ -4,6 +4,10 @@ const bcrypt = require('bcryptjs')
 const moment = require('moment')
 const { User, Token } = require('../models')
 
+const sharp = require('sharp')
+const path = require('path')
+const fs = require('fs')
+
 class UserController {
   create (req, res) {
     return res.render('auth/signup')
@@ -86,6 +90,13 @@ class UserController {
       await User.update({ name, user }, { where: { id: user.id } })
     } else {
       const { filename: avatar } = req.file
+      await sharp(req.file.path)
+        .resize(500)
+        .jpeg({ quality: 70 })
+        .toFile(path.resolve(req.file.destination, 'resized', avatar))
+      // remove os arquivo da pasta, arquivos velhos
+      fs.unlinkSync(req.file.path)
+
       await User.update({ name, avatar, user }, { where: { id: user.id } })
     }
 
@@ -235,6 +246,13 @@ class UserController {
       req.flash('error', 'Esse email já está cadastrado!')
       return res.redirect('/')
     }
+
+    await sharp(req.file.path)
+      .resize(500)
+      .jpeg({ quality: 70 })
+      .toFile(path.resolve(req.file.destination, 'resized', avatar))
+    // remove os arquivo da pasta, arquivos velhos
+    fs.unlinkSync(req.file.path)
 
     // Create and save the user
     const user = await User.create({
