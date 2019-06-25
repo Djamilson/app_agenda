@@ -13,7 +13,7 @@ class ScheduleController {
       { where: { id: reserva.id } }
     )
 
-    req.flash('success', 'Cancelamento do uso com sucesso!')
+    req.flash('success', 'Cancelamento da presença com sucesso!')
 
     return res.redirect('/app/agendamento/diarios')
   }
@@ -28,7 +28,7 @@ class ScheduleController {
       { where: { id: reserva.id } }
     )
 
-    req.flash('success', 'Reserva confirmada com sucesso!')
+    req.flash('success', 'Presença confirmada com sucesso!')
 
     return res.redirect('/app/agendamento/diarios')
   }

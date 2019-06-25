@@ -6,7 +6,6 @@ class DashboardController {
   async desabilitarQuiosque (req, res) {
     const { id } = req.body
 
-    console.log('MMIDI ID: ', id)
     const quiosque = await Quiosque.findByPk(id)
 
     await Quiosque.update(

@@ -26,8 +26,6 @@ class AvailableQuiosqueController {
       vetor.push(moment.utc(a.date).format('Y/MM/DD'))
     })
 
-    console.log('Vetor:', vetor)
-
     req.available = vetor
     next()
   }

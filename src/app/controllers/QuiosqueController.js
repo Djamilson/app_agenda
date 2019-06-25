@@ -1,5 +1,9 @@
 const { Quiosque } = require('../models')
 
+const sharp = require('sharp')
+const path = require('path')
+const fs = require('fs')
+
 class UserController {
   async index (req, res) {
     const providers = await Quiosque.findAll()
@@ -43,6 +47,14 @@ class UserController {
       )
     } else {
       const { filename: avatar } = req.file
+
+      await sharp(req.file.path)
+        .resize(500)
+        .jpeg({ quality: 70 })
+        .toFile(path.resolve(req.file.destination, 'resized', avatar))
+      // remove os arquivo da pasta, arquivos velhos
+      fs.unlinkSync(req.file.path)
+
       await Quiosque.update(
         { name, complemento, avatar, provider: status, quiosque },
         { where: { id: quiosque.id } }
@@ -56,6 +68,13 @@ class UserController {
 
   async store (req, res) {
     const { filename: avatar } = req.file
+
+    await sharp(req.file.path)
+      .resize(500)
+      .jpeg({ quality: 70 })
+      .toFile(path.resolve(req.file.destination, 'resized', avatar))
+    // remove os arquivo da pasta, arquivos velhos
+    fs.unlinkSync(req.file.path)
 
     await Quiosque.create({ ...req.body, avatar })
 
