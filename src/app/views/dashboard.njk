@@ -23,7 +23,7 @@
       <ul class="social-buttons">
         <li>
           <a href="/app/agendamento/diarios">
-            <i class="fas fa-calendar-check fa-lg fa-fw" role="presentation"></i>
+            <i class="fas fa-calendar-alt fa-lg fa-fw" role="presentation"></i>
             &nbsp;&nbsp;&nbsp;Locação diárias</a>
         </li>
 
@@ -31,30 +31,35 @@
 
       <ul class="social-buttons">
         <li>
+          <a href="/app/codigo" class="editar">
+            <i class="fas fa fa-umbrella fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp; Cadastrar Código do sócio</a>
+        </li>
+      </ul>
+      
+      <ul class="social-buttons">
+        <li>
           <a href="/app/quiosque" class="editar">
-            <i class="fas fa fa-wpforms fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp; Cadastrar Quiosque</a>
+            <i class="fas fa fa-umbrella fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp; Cadastrar Quiosque</a>
         </li>
         <li>
           <a href="/app/quiosque/inativos" class="editar">
-            <i class="fas fa fa-edit fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp; Quiosque Inativos</a>
+            <i class="fas fa-umbrella-beach fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp; Quiosque Inativos</a>
         </li>
-
         <li>
           <a href="/app/user" class="editar">
-            <i class="fas fa fa-wpforms fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp; Cadastrar Usuário</a>
+            <i class="fas fa fa-user-plus fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp; Cadastrar Usuário</a>
         </li>
       </ul>
-
     {% endif %}
     <ul class="social-buttons">
       <li>
         <a href="/app/user/edit/{{ user.id }}" class="editar">
-          <i class="fas fa-edit fa-lg fa-fw"></i>
+          <i class="fas fa-user-edit fa-lg fa-fw"></i>
           &nbsp;&nbsp;&nbsp;Editar Perfil</a>
       </li>
       <li>
         <a href="/app/user/edit/senha/{{ user.id }}" class="editar">
-          <i class="fas fa-edit fa-lg fa-fw"></i>
+          <i class="fas fa-user-lock fa-lg fa-fw"></i>
           &nbsp;&nbsp;&nbsp;Editar Senha</a>
       </li>
       <li>
@@ -72,7 +77,7 @@
     <ul class="providers">
       {% for provider in providers %}
         <li class="provider
-           {% if provider.total == 0 %} alert alert-warning {% endif %}
+           {% if provider.total == 0 %} provider-cor {% else%} provider-default {% endif %}
       ">
           <div class="row">
             <div class="div2">
@@ -130,8 +135,7 @@
                   {% if provider.total != 0 %}
 
                     <li class="content-aligth">
-                      <a aria-label="Reserva" data-balloon-pos="left"
-                       class="tooltip-azul checar" href="/app/reservas/new/{{ provider.id }}">
+                      <a aria-label="Reserva" data-balloon-pos="left" class="tooltip-azul checar" href="/app/reservas/new/{{ provider.id }}">
                         <i class="fas fa-plus"></i>
                       </a>
                     </li>

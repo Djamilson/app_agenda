@@ -47,7 +47,7 @@ class ScheduleController {
           ]
         }
       },
-      order: [['date', 'ASC']]
+      order: [['date', 'DESC']]
     })
 
     if (!available) {
@@ -64,6 +64,22 @@ class ScheduleController {
       const reservadoem = moment.utc(reserva.created_at).format('DD/MM/YYYY')
       const reservadopara = moment.utc(reserva.date).format('DD/MM/YYYY')
 
+      let hoje = new Date()
+      hoje.toLocaleString()
+
+      let d3 = moment.utc({
+        year: hoje.getFullYear(),
+        month: hoje.getMonth(),
+        day: hoje.getDate() - 1,
+        hour: 0,
+        minute: 0,
+        second: 0,
+        millisecond: 0
+      })
+
+      const dataReserva = new Date(moment.utc(reserva.date).format())
+      const status = moment(d3).isBefore(dataReserva) // true
+
       const name = reserva.quiosque.name
       const complemento = reserva.quiosque.complemento
       const avatar = reserva.quiosque.avatar
@@ -75,7 +91,8 @@ class ScheduleController {
         complemento: complemento,
         reservadoem: reservadoem,
         reservadopara: reservadopara,
-        avatar: avatar
+        avatar: avatar,
+        status
       })
     })
     const name = await req.session.user.name.split(' ')

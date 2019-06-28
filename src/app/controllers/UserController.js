@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer')
 const bcrypt = require('bcryptjs')
 
 const moment = require('moment')
-const { User, Token } = require('../models')
+const { User, Token, Codigo } = require('../models')
 
 const sharp = require('sharp')
 const path = require('path')
@@ -89,6 +89,21 @@ class UserController {
     if (!file) {
       await User.update({ name, user }, { where: { id: user.id } })
     } else {
+      const file = user.avatar
+
+      const filePath = path.resolve(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        'tmp',
+        'uploads',
+        'resized',
+        file
+      )
+
+      fs.unlinkSync(filePath)
+
       const { filename: avatar } = req.file
       await sharp(req.file.path)
         .resize(500)
@@ -237,7 +252,31 @@ class UserController {
 
   async store (req, res) {
     const { filename: avatar } = req.file
-    const { email } = req.body
+    const { email, codigointerno } = req.body
+
+    const codigoInterno = await Codigo.findOne({
+      where: { codigo_interno: codigointerno }
+    })
+
+    if (!codigoInterno) {
+      const filePath = path.resolve(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        'tmp',
+        'uploads',
+        avatar
+      )
+      fs.unlinkSync(filePath)
+
+      req.flash(
+        'error',
+        'Código interno não encontrado, entre em contato com a administração!'
+      )
+
+      return res.redirect('/')
+    }
 
     const userBanco = await User.findOne({ where: { email } })
 
@@ -258,6 +297,7 @@ class UserController {
     const user = await User.create({
       ...req.body,
       avatar,
+      codigo_interno: codigoInterno.id,
       isVerified: false
     })
 
@@ -359,7 +399,31 @@ class UserController {
 
   async storeNew (req, res) {
     const { filename: avatar } = req.file
-    const { email } = req.body
+    const { email, codigointerno } = req.body
+
+    const codigoInterno = await Codigo.findOne({
+      where: { codigo_interno: codigointerno }
+    })
+
+    if (!codigoInterno) {
+      const filePath = path.resolve(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        'tmp',
+        'uploads',
+        avatar
+      )
+      fs.unlinkSync(filePath)
+
+      req.flash(
+        'error',
+        'Código interno não encontrado, entre em contato com a administração!'
+      )
+
+      return res.redirect('/')
+    }
 
     const userBanco = await User.findOne({ where: { email } })
 
@@ -373,6 +437,7 @@ class UserController {
     const user = await User.create({
       ...req.body,
       avatar,
+      codigo_interno: codigoInterno.id,
       provider: true,
       isVerified: false
     })

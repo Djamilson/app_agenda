@@ -21,7 +21,8 @@
       <ul class="providers">
         {% for appointment in appointments %}
           <li class="provider
-         {% if appointment.statusdeuso == true %} alert alert-success {% endif %}
+        {% if appointment.statusdeuso == true %} provider-success {% else%} provider-default {% endif %}
+
           ">
             <div class="row">
               <div class="div2">
@@ -74,7 +75,7 @@
                   {% if appointment.statusdeuso != true %}
 
                     <li class="content-aligth">
-                      <a aria-label="Confirmar agendamento" data-balloon-pos="left"
+                      <a aria-label="Confirmar presença" data-balloon-pos="left"
                       class="btn btn-secondary btn-lg btn-block tooltip-azul checar" href="/app/agendamento/diarios/{{ appointment.id }}">
                         <i class="fas fa-check"></i>
                       </a>
@@ -85,7 +86,6 @@
 
                       <form action="/app/agendamento/confirmacancelamento" method="post" id="myForm_{{ appointment.id }}">
                         <input type="hidden" name="id" value="{{ appointment.id }}">
-
                         <span type="button" onclick="lockFunction(this)"
                         id="{{ appointment.id }}"
                         aria-label="Cancela confirmação de presença!"
@@ -112,7 +112,7 @@
         var id = e.id;
         bootbox.confirm({
           title: "Atenção!",
-          message: "<i class='fas fa-exclamation-triangle fa-lg fa-fw'></i> Tem certeza que deseja remover essa reserva?",
+          message: "<i class='fas fa-exclamation-triangle fa-lg fa-fw'></i> Tem certeza que deseja cancelar essa presença?",
           size: "small",
           onEscape: true,
           backdrop: true,

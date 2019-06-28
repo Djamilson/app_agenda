@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
       password: DataTypes.VIRTUAL,
       password_hash: DataTypes.STRING,
       provider: DataTypes.BOOLEAN,
-      is_verified: DataTypes.BOOLEAN
+      is_verified: DataTypes.BOOLEAN,
+      status: DataTypes.BOOLEAN
     },
     {
       hooks: {
@@ -28,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
       as: 'token',
       foreignKey: 'user_id',
       foreignKeyConstraint: true
+    })
+    User.belongsTo(models.Codigo, {
+      as: 'codigo',
+      foreignKey: 'codigo_interno'
     })
   }
 

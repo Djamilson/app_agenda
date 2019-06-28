@@ -46,6 +46,21 @@ class UserController {
         { where: { id: quiosque.id } }
       )
     } else {
+      const file = quiosque.avatar
+
+      const filePath = path.resolve(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        'tmp',
+        'uploads',
+        'resized',
+        file
+      )
+
+      fs.unlinkSync(filePath)
+
       const { filename: avatar } = req.file
 
       await sharp(req.file.path)

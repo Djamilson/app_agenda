@@ -21,7 +21,7 @@
       <ul class="providers">
 
         {% for appointment in appointments %}
-          <li class="provider">
+          <li class="provider provider-default">
             <div class="row">
               <div class="div2">
                 <img src="/files/{{ appointment.avatar }}"/></div>
@@ -62,56 +62,58 @@
                   </div>
                 </div>
               </div>
-              <div class="link">
-                <form action="/app/schedule/delete/" method="post" id="myForm_{{appointment.id}}">
-                  <input type="hidden" name="id" value="{{ appointment.id }}">
 
-                  <span aria-label="Cancelar agendamento" data-balloon-pos="left"
-                  type="button" id="{{ appointment.id }}" onclick="lockFunction(this)"
-                  class="btn btn-danger btn-block tooltip-azul">
-                    <i class="fas fa fa-trash-alt"></i>
-                  </span>
+              {% if appointment.status != false %}
 
-                </form>
+                <div class="link">
+                  <form action="/app/schedule/delete/" method="post" id="myForm_{{appointment.id}}">
+                    <input type="hidden" name="id" value="{{ appointment.id }}">
 
-              </div>
-            </li>
-          {% endfor %}
-        </ul>
+                    <span aria-label="Cancelar agendamento" data-balloon-pos="left" type="button" id="{{ appointment.id }}" onclick="lockFunction(this)" class="btn btn-danger btn-block tooltip-azul">
+                      <i class="fas fa fa-trash-alt"></i>
+                    </span>
 
+                  </form>
+
+                </div>
+                {% endif%}
+              </li>
+            {% endfor %}
+          </ul>
+
+        </div>
       </div>
-    </div>
-    <script>
+      <script>
 
-      function lockFunction(e) {
-        var id = e.id;
+        function lockFunction(e) {
+          var id = e.id;
 
-        bootbox.confirm({
-          title: "Atenção!",
-          message: "<i class='fas fa-exclamation-triangle fa-lg fa-fw'></i> Tem certeza que deseja remover essa reserva?",
-          size: "small",
-          onEscape: true,
-          backdrop: true,
-          buttons: {
-            cancel: {
-              className: 'btn-danger',
-              label: '<i class="fa fa-times"></i> Não'
+          bootbox.confirm({
+            title: "Atenção!",
+            message: "<i class='fas fa-exclamation-triangle fa-lg fa-fw'></i> Tem certeza que deseja remover essa reserva?",
+            size: "small",
+            onEscape: true,
+            backdrop: true,
+            buttons: {
+              cancel: {
+                className: 'btn-danger',
+                label: '<i class="fa fa-times"></i> Não'
+              },
+              confirm: {
+                className: 'btn-success',
+                label: '<i class="fa fa-check"></i> Sim'
+              }
             },
-            confirm: {
-              className: 'btn-success',
-              label: '<i class="fa fa-check"></i> Sim'
-            }
-          },
 
-          callback: function (result) {
-            if (result === true) {
-              document
-                .getElementById(`myForm_${id}`)
-                .submit();
+            callback: function (result) {
+              if (result === true) {
+                document
+                  .getElementById(`myForm_${id}`)
+                  .submit();
+              }
             }
-          }
-        });
-      }
-    </script>
+          });
+        }
+      </script>
 
-  {% endblock %}
+    {% endblock %}

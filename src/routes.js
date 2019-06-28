@@ -17,7 +17,6 @@ routes.use((req, res, next) => {
 })
 
 routes.use('/files/:file', controllers.FileController.show)
-
 routes.get('/', guestMiddleware, controllers.SessionController.create)
 routes.post('/signin', controllers.SessionController.store)
 
@@ -80,16 +79,6 @@ routes.post(
   controllers.QuiosqueInativosController.update
 )
 
-routes.get(
-  '/app/appointments/new/:provider',
-  controllers.AppointmentController.create
-)
-routes.post(
-  '/app/appointments/new/:provider',
-  controllers.AppointmentController.store
-)
-
-routes.get('/app/available/:provider', controllers.AvailableController.index)
 routes.post('/app/schedule/delete', controllers.ScheduleController.delete)
 routes.get('/app/schedule', controllers.ScheduleController.index)
 
@@ -133,6 +122,9 @@ routes.get(
   controllers.AvailableQuiosqueController.index,
   controllers.ReservaController.create
 )
+
+routes.get('/app/codigo', controllers.CodigoController.index)
+routes.post('/app/codigo', controllers.CodigoController.store)
 
 routes.post('/app/reservas/new/:provider', controllers.ReservaController.store)
 

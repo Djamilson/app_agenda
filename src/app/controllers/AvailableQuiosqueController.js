@@ -22,7 +22,6 @@ class AvailableQuiosqueController {
     const vetor = []
 
     providers.find((a, q) => {
-      //   console.log('Índice: ', q, 'Valor: ', moment(a.date).format('Y/MM/DD'))
       vetor.push(moment.utc(a.date).format('Y/MM/DD'))
     })
 

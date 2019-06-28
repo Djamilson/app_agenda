@@ -14,3 +14,13 @@
 .tooltip-slide {
   --balloon-move: 30px;
 }
+
+.provider-success {
+  background: #DFF0D8;
+}
+.provider-cor {
+  background: #fcf8e3;
+}
+.provider-default {
+  background: #e8e3f5;
+}

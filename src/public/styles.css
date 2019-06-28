@@ -516,11 +516,11 @@ body {
 }
 
 .main-wrapper .content form span.checar:hover {
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 .main-wrapper .content a.checar:hover {
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 .main-wrapper .content a.logout {
@@ -560,6 +560,7 @@ body {
 
 .main-wrapper .content a.logout:hover {
   background: #c15858;
+  opacity: 0.6;
 }
 
 .main-wrapper .content p {
@@ -587,7 +588,6 @@ ul.providers {
 
 .provider {
   padding: 10px;
-  background: #e8e3f5;
   border-radius: 10px;
   margin-bottom: 20px;
   border: 1px solid #ddd;
