@@ -26,7 +26,7 @@
         <input type="text" id="datareserva" name="date" class="flatpickr" placeholder="Escolha uma data">
       </span>
 
-      <button type="submit">
+      <button type="submit" onclick="loading(this)">
         <i class="fas fa-check"></i>
         &nbsp;&nbsp;&nbsp; Agendar</button>
       <a href="/">
@@ -34,6 +34,9 @@
         &nbsp;&nbsp;&nbsp; Voltar</a>
     </form>
   </div>
+
+  {% include "_partials/loading.njk" %}
+
   <script type="text/javascript">
 
     var form = document.getElementById('form'),

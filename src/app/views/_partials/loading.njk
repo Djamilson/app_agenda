@@ -1,0 +1,19 @@
+<script type="text/javascript">
+
+  function loading(e) {
+    var id = e.id;
+
+    $.blockUI({
+      message: "<i class='fa fa-spinner fa-pulse orange' style='font-size:600%'></i>",
+      css: {
+        borderWidth: '0px',
+        backgroundColor: 'transparent'
+      }
+    });
+    /*
+      setTimeout(function () {
+        $.unblockUI();
+      }, 3000);*/
+
+  }
+</script>

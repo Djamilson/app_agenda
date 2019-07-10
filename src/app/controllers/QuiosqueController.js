@@ -47,19 +47,21 @@ class UserController {
       )
     } else {
       const file = quiosque.avatar
-
-      const filePath = path.resolve(
-        __dirname,
-        '..',
-        '..',
-        '..',
-        'tmp',
-        'uploads',
-        'resized',
-        file
-      )
-
-      fs.unlinkSync(filePath)
+      if (!file) {
+        const filePath = path.resolve(
+          __dirname,
+          '..',
+          '..',
+          '..',
+          'tmp',
+          'uploads',
+          'resized',
+          file
+        )
+        if (!filePath) {
+          fs.unlinkSync(filePath)
+        }
+      }
 
       const { filename: avatar } = req.file
 

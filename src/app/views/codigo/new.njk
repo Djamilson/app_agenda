@@ -19,11 +19,14 @@
       <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
     </span>
 
-    <button type="submit">
+    <button type="submit" onclick="loading(this)">
       <i class="fas fa-check"></i>
       &nbsp;&nbsp;&nbsp; Salvar</button>
     <a href="/app/dashboard">
       <i class="fas fa-arrow-left"></i>
       &nbsp;&nbsp;&nbsp; Voltar</a>
   </form>
+
+  {% include "_partials/loading.njk" %}
+
 {% endblock %}

@@ -16,11 +16,22 @@
 }
 
 .provider-success {
-  background: #DFF0D8;
+  background: #dff0d8;
 }
 .provider-cor {
   background: #fcf8e3;
 }
 .provider-default {
   background: #e8e3f5;
+}
+
+.orange {
+  color: #ff892a;
+}
+
+
+.blockUI.blockOverlay {
+/*	background-color: #f3f4f5 !important;*/
+	opacity: 0.5 !important;
+	box-shadow: 0 0 10px 1px #000 !important;
 }

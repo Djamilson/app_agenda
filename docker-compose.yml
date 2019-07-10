@@ -1,17 +1,17 @@
-version: "3.3"
+version: "3.7"
 
 services:
   app:
+    image: reserva
     build: .
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: postgres://user:pass@postgres:5432/agenda
+      DATABASE_URL: postgres://user:djamilson@postgres:5432/gonodemodule2
       NODE_ENV: development
-      PORT: 3000
     ports:
       - "3000:3000"
-      - "9229:9229"
+   # entrypoint: reserva httpd -f -p 0.0.0.0:3000 -h /usr/src/app
 
   postgres:
     image: postgres:11.2-alpine
@@ -20,12 +20,27 @@ services:
       POSTGRES_PASSWORD: 1alvescosta
       POSTGRES_DB: gonodemodule2
 
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db.sql:/docker-entrypoint-initdb.d/db.sql
+      - postgres:/var/lib/postgresql/data
+
   pgadmin-compose:
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: "admin@gmail.com"
       PGADMIN_DEFAULT_PASSWORD: "1alvescosta"
+    restart: unless-stopped
     ports:
       - "16543:80"
     depends_on:
       - postgres
+    volumes:
+      - pgadmin:/root/.pgadmin
+
+
+volumes:
+  postgres:
+  pgadmin:

@@ -40,13 +40,15 @@
       <input type="password" placeholder="Confirme Senha" name="confirma_password" id="confirm_password" required="required">
     </span>
 
-    <button type="submit">
+    <button type="submit" onclick="loading(this)">
       <i class="fas fa-check"></i>
       &nbsp;&nbsp;&nbsp; Criar conta</button>
     <a href="/">
       <i class="fas fa-arrow-left"></i>
       &nbsp;&nbsp;&nbsp; Voltar</a>
   </form>
+
+  {% include "_partials/loading.njk" %}
 
   <script type="text/javascript">
     var avatarInput = document.getElementById('avatar')

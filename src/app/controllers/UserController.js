@@ -82,27 +82,13 @@ class UserController {
 
   async salvaredicaoperfil (req, res) {
     const { id, name } = req.body
-
     const user = await User.findByPk(id)
 
     const file = req.file
     if (!file) {
       await User.update({ name, user }, { where: { id: user.id } })
     } else {
-      const file = user.avatar
-
-      const filePath = path.resolve(
-        __dirname,
-        '..',
-        '..',
-        '..',
-        'tmp',
-        'uploads',
-        'resized',
-        file
-      )
-
-      fs.unlinkSync(filePath)
+      console.log('Vou trata: ', user.avatar)
 
       const { filename: avatar } = req.file
       await sharp(req.file.path)
@@ -113,6 +99,21 @@ class UserController {
       fs.unlinkSync(req.file.path)
 
       await User.update({ name, avatar, user }, { where: { id: user.id } })
+
+      if (user.avatar !== null) {
+        const filePath = path.resolve(
+          __dirname,
+          '..',
+          '..',
+          '..',
+          'tmp',
+          'uploads',
+          'resized',
+          user.avatar
+        )
+
+        fs.unlinkSync(filePath)
+      }
     }
 
     req.flash(

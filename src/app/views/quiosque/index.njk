@@ -24,14 +24,16 @@
       <input type="checkbox" id="provider" name="provider" checked="checked" value="1">
       Condição da locação: Apto para uso?
     </label>
-
-    <button type="submit">
+    <button type="submit" onclick="loading(this)">
       <i class="fas fa-check"></i>
       &nbsp;&nbsp;&nbsp; Salvar</button>
     <a href="/">
       <i class="fas fa-arrow-left"></i>
       &nbsp;&nbsp;&nbsp; Voltar</a>
+
   </form>
+
+  {% include "_partials/loading.njk" %}
 
   <script type="text/javascript">
     var avatarInput = document.getElementById('avatar')

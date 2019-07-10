@@ -63,14 +63,15 @@ class ReservaController {
     }) */
 
     console.log(
-      `horaorao :: ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
+      `hora da Reserva :: ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
     )
     await Reserva.create({
       user_id: id,
       quiosque_id: provider,
       date: d3,
       status: true,
-      horadareserva: `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
+      horadareserva: `${now.getHours() -
+        3}:${now.getMinutes()}:${now.getSeconds()}`
     })
     req.flash('success', 'Reserva efetuada com sucesso!')
     return res.redirect('/app/dashboard')

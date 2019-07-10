@@ -28,7 +28,7 @@
         <input type="password" placeholder="Confirme Senha" name="confirma_password" id="confirm_password" required="required">
       </span>
 
-      <button type="submit">
+      <button type="submit" onclick="loading(this)">
         <i class="fas fa-check"></i>
         &nbsp;&nbsp;&nbsp; Solicitar</button>
       <a href="/">
@@ -36,6 +36,9 @@
         &nbsp;&nbsp;&nbsp; Já possuo conta</a>
     </form>
   </div>
+
+  {% include "_partials/loading.njk" %}
+
   <script type="text/javascript">
 
     var password = document.getElementById("password"),
