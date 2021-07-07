@@ -9,7 +9,9 @@ module.exports = (sequelize, DataTypes) => {
       avatar: DataTypes.STRING,
       password: DataTypes.VIRTUAL,
       password_hash: DataTypes.STRING,
-      provider: DataTypes.BOOLEAN
+      provider: DataTypes.BOOLEAN,
+      is_verified: DataTypes.BOOLEAN,
+      status: DataTypes.BOOLEAN
     },
     {
       hooks: {
@@ -21,6 +23,18 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   )
+
+  User.associate = models => {
+    User.hasOne(models.Token, {
+      as: 'token',
+      foreignKey: 'user_id',
+      foreignKeyConstraint: true
+    })
+    User.belongsTo(models.Codigo, {
+      as: 'codigo',
+      foreignKey: 'codigo_interno'
+    })
+  }
 
   // metodos personalizados para o usuário
   User.prototype.checkPassword = function (password) {

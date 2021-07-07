@@ -11,6 +11,7 @@ class FileController {
       '..',
       'tmp',
       'uploads',
+      'resized',
       file
     )
     return res.sendFile(filePath)

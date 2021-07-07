@@ -1,0 +1,63 @@
+{% extends "_layouts/auth.njk" %}
+
+{% block body %}
+  <form action="/app/quiosque/editar" method="post" enctype="multipart/form-data">
+
+    <strong>Olá,
+      {{ usuario.name }}</strong>
+
+    <p>Editando a locação!</p>
+
+    {% include "_partials/flash.njk" %}
+
+    <label for="avatar">
+      <img src="/files/{{quiosqueedit.avatar}}" height="42"/>
+    </label>
+
+    <input id="avatar" name="avatar" type="file"/>
+
+    {% include "_partials/flash.njk" %}
+
+    <br>
+    <label>Nome</label>
+    <input name="id" type="hidden" value="{{quiosqueedit.id}}">
+    <span class="inputWithIcon">
+      <input type="text" name="name" placeholder="Nome" value="{{quiosqueedit.name}}">
+      <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
+    </span>
+
+    <br>
+    <label>Complemento</label>
+    <span class="inputWithIcon">
+      <input type="text" name="complemento" placeholder="Complemento" value="{{quiosqueedit.complemento}}">
+      <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
+    </span>
+
+    <label for="provider">
+      <input type="checkbox" id="provider" name="provider" checked="checked" value="{{quiosqueedit.provider}}">
+      Condição da locação: Apto para uso?
+    </label>
+
+    <button type="submit" onclick="loading(this)">
+      <i class="fas fa-check"></i>
+      &nbsp;&nbsp;&nbsp; Salvar</button>
+    <a href="/">
+      <i class="fas fa-arrow-left"></i>
+      &nbsp;&nbsp;&nbsp; Voltar</a>
+  </form>
+
+
+  {% include "_partials/loading.njk" %}
+
+  <script type="text/javascript">
+    var avatarInput = document.getElementById('avatar')
+    var img = document.querySelector('label[for=avatar] img')
+
+    avatarInput.onchange = function (e) {
+      img
+        .classList
+        .add('preview')
+      img.src = URL.createObjectURL(e.target.files[0])
+    }
+  </script>
+{% endblock %}

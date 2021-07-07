@@ -2,16 +2,37 @@
 
 {% block body %}
   <form action="/signin" method="post">
-    <img src="/images/logo.svg" height="42"/>
+    <img src="images/logo_aabb.jpeg" height="42"/>
 
-     {% include "_partials/flash.njk" %}
-     
-    <input type="email" name="email" placeholder="Seu e-mail">
-    <input type="password" name="password" placeholder="Senha secreta">
+    {% include "_partials/flash.njk" %}
 
-    <button type="submit">Entrar</button>
-    <a href="/signup">
-      Criar conta grátis</a>
+    <span class="inputWithIcon">
+      <i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i>
+      <input type="email" name="email" placeholder="Seu e-mail">
+    </span>
+
+    <span class="inputWithIcon">
+      <i class="fa fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
+      <input type="password" name="password" placeholder="Senha secreta">
+    </span>
+
+    <button type="submit" onclick="loading(this)">
+      <i class="fa fa-sign-in fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp;Entrar</button>
+
+    <ul class="social-buttons">
+      <li>
+        <a href="/signup" class="font12">
+          <i class="fas fa-address-book"></i>
+          Criar conta</a>
+      </li>
+      <li>
+        <a class="font12" href="/solicitarRecuperacaoSenha">
+          Recupera senha</a>
+      </li>
+    </ul>
+
   </form>
+
+  {% include "_partials/loading.njk" %}
 
 {% endblock %}

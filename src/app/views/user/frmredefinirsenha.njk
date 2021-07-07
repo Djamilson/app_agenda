@@ -1,0 +1,58 @@
+{% extends "_layouts/auth.njk" %}
+
+{% block body %}
+  <div >
+
+    <form action="/app/user/edit/upsenha" method="post">
+      <div class="auth-wrapper">
+        <img src="/files/{{ user.avatar}}" height="24"/>
+      </div>
+
+      <strong>Olá,
+        {{ usuario.name }}</strong>
+
+      <p>Redefina sua senha</p>
+
+      {% include "_partials/flash.njk" %}
+
+      <input name="id" type="hidden" value="{{useredit.id}}">
+      <span class="inputWithIcon">
+        <i class="fa fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
+        <input type="password" placeholder="Nova senha" name="password" id="password" required="required">
+      </span>
+
+      <span class="inputWithIcon">
+        <i class="fa fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
+        <input type="password" placeholder="Confirme Senha" name="confirma_password" id="confirm_password" required="required">
+      </span>
+      <button type="submit" onclick="loading(this)">
+        <i class="fas fa-check"></i>
+        &nbsp;&nbsp;&nbsp;Redefinir senha</button>
+
+      <a href="/">
+        <i class="fas fa-arrow-left"></i>
+        &nbsp;&nbsp;&nbsp; Voltar</a>
+
+    </form>
+  </div>
+
+  {% include "_partials/loading.njk" %}
+
+  <script type="text/javascript">
+
+    var password = document.getElementById("password"),
+      confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword() {
+      if (password.value != confirm_password.value) {
+        confirm_password.setCustomValidity("Senhas diferentes!");
+      } else {
+        confirm_password.setCustomValidity('');
+      }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+  </script>
+
+{% endblock %}

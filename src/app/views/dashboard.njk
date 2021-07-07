@@ -2,25 +2,186 @@
 
 {% block body %}
   <div class="content">
+
+    <div class="auth-wrapper">
+      <div >
+        <img src="/files/{{ user.avatar}}" height="24"/>
+      </div>
+    </div>
     <strong>Olá,
-      {{ user.name }}</strong>
-    <p>Inicie um agendamento escolhendo um profissional abaixo:</p>
+      {{ usuario.name}}</strong>
+
+    <ul class="social-buttons">
+      <li class="content-aligth">
+        <a href="/app/logout" class="logout">
+          <i class="fas fa-sign-out-alt"></i>
+          &nbsp;&nbsp;&nbsp;Sair</a>
+      </li>
+    </ul>
+    {% if (user.provider === true) %}
+
+      <ul class="social-buttons">
+        <li>
+          <a href="/app/agendamento/diarios">
+            <i class="fas fa-calendar-alt fa-lg fa-fw" role="presentation"></i>
+            &nbsp;&nbsp;&nbsp;Locação diárias</a>
+        </li>
+
+      </ul>
+
+      <ul class="social-buttons">
+        <li>
+          <a href="/app/codigo" class="editar">
+            <i class="fas
+             fa-list-ol
+
+             fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp; Cadastrar Código do sócio</a>
+        </li>
+      </ul>
+
+      <ul class="social-buttons">
+        <li>
+          <a href="/app/quiosque" class="editar">
+            <i class="fas fa fa-umbrella fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp; Cadastrar Quiosque</a>
+        </li>
+        <li>
+          <a href="/app/quiosque/inativos" class="editar">
+            <i class="fas fa-umbrella-beach fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp; Quiosque Inativos</a>
+        </li>
+        <li>
+          <a href="/app/user" class="editar">
+            <i class="fas fa fa-user-plus fa-lg fa-fw"></i>&nbsp;&nbsp;&nbsp; Cadastrar Usuário</a>
+        </li>
+      </ul>
+    {% endif %}
+    <ul class="social-buttons">
+      <li>
+        <a href="/app/user/edit/{{ user.id }}" class="editar">
+          <i class="fas fa-user-edit fa-lg fa-fw"></i>
+          &nbsp;&nbsp;&nbsp;Editar Perfil</a>
+      </li>
+      <li>
+        <a href="/app/user/edit/senha/{{ user.id }}" class="editar">
+          <i class="fas fa-user-lock fa-lg fa-fw"></i>
+          &nbsp;&nbsp;&nbsp;Editar Senha</a>
+      </li>
+      <li>
+        <a href="/app/schedule">
+          <i class="fas fa-calendar-check fa-lg fa-fw" role="presentation"></i>
+          &nbsp;&nbsp;&nbsp;Meus agendamentos</a>
+      </li>
+    </ul>
+
+    <br>
+    {% include "_partials/flash.njk" %}
+
+    <p>Inicie um agendamento escolhendo uma opção:</p>
 
     <ul class="providers">
       {% for provider in providers %}
-        <li class="provider">
-          <div>
-            <img src="/files/{{ provider.avatar }}"/>
-            <strong>{{ provider.name }}</strong>
+        <li class="provider
+           {% if provider.total == 0 %} provider-cor {% else%} provider-default {% endif %}
+      ">
+          <div class="row">
+            <div class="div2">
+              <img src="/files/{{ provider.avatar }}"/>
+
+              <div class="div1">
+                <div class="component">
+
+                  <span >
+                    <i class="fas fa fa-umbrella"></i>
+                    <strong>&nbsp;&nbsp;&nbsp;{{ provider.name }}</strong>
+                    <hr class="message-inner-separator">
+                    <p>
+                      {% if provider.total != 0 %}
+                        Total disponível:
+                        {{provider.total}}
+                      {% else %}
+                        Não temos mais datas disponíveis
+                      {% endif %}
+
+                    </p>
+                  </span>
+                  <div class="box2">
+                    <div class="formatText">
+                      {{ provider.complemento }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="link">
+
+                <ul class="dashboard-buttons">
+
+                  {% if (user.provider === true) %}
+                    <li class="content-aligth">
+
+                      <form action="/app/dashboard/desabilitarquiosque" method="post" id="myForm_{{ provider.id }}">
+                        <input type="hidden" name="id" value="{{ provider.id }}">
+
+                        <span type="button" aria-label="Desativar" data-balloon-pos="left" id="{{ provider.id }}" onclick="lockFunction(this)" class="btn btn-danger btn-block tooltip-azul">
+                          <i class="fas fa-low-vision fa-lg fa-fw"></i>
+                        </span>
+
+                      </form>
+
+                    </li>
+                    <li class="content-aligth">
+                      <a aria-label="Editar" class="tooltip-azul" data-balloon-pos="left" href="/app/quiosque/editar/{{ provider.id }}">
+                        <i class="fas fa-edit"></i>
+                      </a>
+                    </li>
+                  {% endif %}
+
+                  {% if provider.total != 0 %}
+
+                    <li class="content-aligth">
+                      <a aria-label="Reserva" data-balloon-pos="left" class="tooltip-azul checar" href="/app/reservas/new/{{ provider.id }}">
+                        <i class="fas fa-plus"></i>
+                      </a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
           </div>
-          <a href="/app/appointments/new/{{ provider.id }}">+</a>
         </li>
       {% endfor %}
     </ul>
-
-    {% if (user.provider === true) %}
-      <a href="/app/schedule">Meus agendamentos</a>
-    {% endif %}
-    <a href="/app/logout" class="logout">Sair</a>
   </div>
+
+  <script>
+
+    function lockFunction(e) {
+      var id = e.id;
+      bootbox.confirm({
+        title: "Atenção!",
+        message: "<i class='fas fa-exclamation-triangle fa-lg fa-fw'></i> Tem certeza que deseja desabilita essa opção de reserva?",
+        size: "small",
+        onEscape: true,
+        backdrop: true,
+        buttons: {
+          cancel: {
+            className: 'btn-danger',
+            label: '<i class="fa fa-times"></i> Não'
+          },
+          confirm: {
+            className: 'btn-success',
+            label: '<i class="fa fa-check"></i> Sim'
+          }
+        },
+
+        callback: function (result) {
+          if (result === true) {
+            document
+              .getElementById(`myForm_${id}`)
+              .submit();
+          }
+        }
+      });
+    }
+  </script>
+
 {% endblock %}

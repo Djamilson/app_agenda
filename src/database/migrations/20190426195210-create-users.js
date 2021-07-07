@@ -28,6 +28,17 @@ module.exports = {
         defaultValue: false,
         type: Sequelize.BOOLEAN
       },
+      is_verified: {
+        allowNull: false,
+        defaultValue: false,
+        type: Sequelize.BOOLEAN
+      },
+      status: {
+        allowNull: false,
+        defaultValue: true,
+        type: Sequelize.BOOLEAN
+      },
+      codigo_interno: { allowNull: false, type: Sequelize.STRING },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE

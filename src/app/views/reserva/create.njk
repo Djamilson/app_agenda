@@ -1,0 +1,79 @@
+{% extends "_layouts/auth.njk" %}
+
+{% block body %}
+  <div >
+
+    <form id="form" action="/app/reservas/new/{{ provider.id }}" method="post">
+
+      <label for="avatar">
+        <img src="/files/{{provider.avatar}}" height="42"/>
+      </label>
+
+      <input id="avatar" name="avatar" type="file"/>
+
+      <strong>{{ provider.name }}</strong>
+
+      <p>
+        {{ provider.complemento }}</p>
+      <br>
+      {% include "_partials/flash.njk" %}
+
+      <label>
+        Escolha:</label>
+
+      <span class="inputWithIcon">
+        <i class="fa fa fa-calendar fa-lg fa-fw" aria-hidden="true"></i>
+        <input type="text" id="datareserva" name="date" class="flatpickr" placeholder="Escolha uma data">
+      </span>
+
+      <button type="submit" onclick="loading(this)">
+        <i class="fas fa-check"></i>
+        &nbsp;&nbsp;&nbsp; Agendar</button>
+      <a href="/">
+        <i class="fas fa-arrow-left"></i>
+        &nbsp;&nbsp;&nbsp; Voltar</a>
+    </form>
+  </div>
+
+  {% include "_partials/loading.njk" %}
+
+  <script type="text/javascript">
+
+    var form = document.getElementById('form'),
+      nome = document.getElementById('datareserva');
+
+    form.onsubmit = function () {
+      if (nome.value == "") {
+
+        bootbox.alert({title: 'Atenção!', message: "O campo data não pode ficar vazio!", size: 'small'});
+
+        return false;
+      }
+    };
+
+    flatpickr('.flatpickr', {
+      minDate: new Date(),
+      maxDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
+      weekNumbers: true,
+      dateFormat: 'd/m/Y',
+      locale: 'pt',
+      disable: [
+        function (dateObject, available = `{{available}}`) {
+          const array = available
+            .split(",")
+            .map(m => m);
+
+          for (var i = 0; i < array.length; i++) {
+
+            if (dateObject.getTime() === new Date(array[i]).getTime())
+              return true;
+            }
+          return false;
+
+        }
+      ]
+
+    })
+  </script>
+
+{% endblock %}

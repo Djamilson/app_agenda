@@ -11,8 +11,25 @@ class SessionController {
     const user = await User.findOne({ where: { email } })
 
     if (!user) {
-      console.log('Usuário não encontrado')
       req.flash('error', 'Usuário não encontrado')
+      return res.redirect('/')
+    }
+
+    // Make sure the user has been verified
+    if (!user.is_verified) {
+      req.flash(
+        'error',
+        'Seu email ainda não foi validado, acesse sua conta de email e confirme a validação do acesso!'
+      )
+      return res.redirect('/')
+    }
+
+    // Make sure the user has been verified
+    if (!user.status) {
+      req.flash(
+        'error',
+        'Não foi possível acessa sua conta, entre em contato com a administração!'
+      )
       return res.redirect('/')
     }
 
@@ -22,6 +39,8 @@ class SessionController {
 
       return res.redirect('/')
     }
+
+    // Login successful, write token, and send back user
 
     console.log('Tudo certo')
     req.session.user = user

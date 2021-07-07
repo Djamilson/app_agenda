@@ -1,0 +1,51 @@
+{% extends "_layouts/auth.njk" %}
+
+{% block body %}
+  <div>
+
+    <form action="/app/user/edit/salvaredicaoperfil" method="post" enctype="multipart/form-data">
+
+      <label for="avatar">
+        <img src="/files/{{useredit.avatar}}" height="42"/>
+      </label>
+
+      <input id="avatar" name="avatar" type="file"/>
+
+      <strong>Olá,
+        {{ usuario.name }}</strong>
+
+      {% include "_partials/flash.njk" %}
+
+      <br>
+      <label>Nome</label>
+      <input name="id" type="hidden" value="{{useredit.id}}">
+
+      <span class="inputWithIcon">
+        <input type="text" name="name" placeholder="Nome completo" value="{{useredit.name}}">
+        <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
+      </span>
+
+      <button type="submit" onclick="loading(this)">
+        <i class="fas fa-check"></i>
+        &nbsp;&nbsp;&nbsp; Editar</button>
+      <a href="/">
+        <i class="fas fa-arrow-left"></i>
+        &nbsp;&nbsp;&nbsp; Voltar</a>
+    </form>
+  </div>
+
+  {% include "_partials/loading.njk" %}
+
+  <script type="text/javascript">
+    var avatarInput = document.getElementById('avatar')
+    var img = document.querySelector('label[for=avatar] img')
+
+    avatarInput.onchange = function (e) {
+      img
+        .classList
+        .add('preview')
+      img.src = URL.createObjectURL(e.target.files[0])
+    }
+  </script>
+
+{% endblock %}

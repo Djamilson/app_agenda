@@ -6,7 +6,9 @@
   "author": "Djamilson <djamilson@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "migrate": "npx sequelize db:migrate",
+    "start:dev": "nodemon src/index.js",
+    "start": "node src/index.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -14,14 +16,20 @@
     "connect-loki": "^1.1.0",
     "dotenv": "^8.0.0",
     "express": "^4.16.4",
+    "express-async-handler": "^1.1.4",
     "express-session": "^1.16.1",
+    "jquery-confirm": "^3.3.4",
     "moment": "^2.24.0",
     "multer": "^1.4.1",
+    "nodemailer": "^6.2.1",
     "nunjucks": "^3.2.0",
     "nunjucks-date-filter": "^0.1.1",
     "pg": "^7.10.0",
+    "pm2": "^3.5.1",
+    "require-dir": "^1.2.0",
     "sequelize": "^5.7.6",
-    "session-file-store": "^1.2.0"
+    "session-file-store": "^1.2.0",
+    "sharp": "^0.22.1"
   },
   "devDependencies": {
     "eslint": "^5.16.0",

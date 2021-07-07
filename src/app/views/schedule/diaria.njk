@@ -1,0 +1,141 @@
+{% extends "_layouts/default.njk" %}
+
+{% block body %}
+  <div id="hour">
+    <div class="content">
+      <div class="auth-wrapper">
+        <div >
+          <img src="/files/{{ user.avatar}}" height="24"/>
+        </div>
+      </div>
+      <strong>Olá,
+        {{ usuario.name}}</strong>
+
+      <a href="/app/dashboard" class="logout">
+        <i class="fas fa-chevron-left"></i>
+        &nbsp;&nbsp;&nbsp;Voltar</a>
+      <br>
+      <strong>Agendamentos diários</strong>
+
+      {% include "_partials/flash.njk" %}
+      <ul class="providers">
+        {% for appointment in appointments %}
+          <li class="provider
+        {% if appointment.statusdeuso == true %} provider-success {% else%} provider-default {% endif %}
+
+          ">
+            <div class="row">
+              <div class="div2">
+                <img src="/files/{{ appointment.avatar }}"/></div>
+
+              <div class="div1">
+                <div class="component">
+
+                  <span >
+                    <i class="fas fa fa-umbrella"></i>
+                    <strong>&nbsp;&nbsp;&nbsp;{{ appointment.name }}
+
+                      {% if appointment.statusdeuso == true %}
+                        - Em Uso
+                      {% endif %}
+
+                    </strong>
+                    <hr class="message-inner-separator">
+                    <p>
+                      {{appointment.cliente}}</p>
+                  </span>
+                  <div class="box">
+                    <div class="div2">
+                      <div class="formatText">
+                        Reservado para: &nbsp;&nbsp;&nbsp;
+                      </div>
+                      <div>{{ appointment.reservadopara }}</div>
+                    </div>
+                    <div class="div2">
+                      <div class="formatText">
+                        Reservado em: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      </div>
+                      <div>
+                        {{ appointment.reservadoem }}</div>
+                    </div>
+                    <div class="div2">
+                      <div class="formatText">
+                        Hora da reserva: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      </div>
+                      <div>{{ appointment.hora }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <span class="link">
+
+                <ul class="dashboard-buttons">
+
+                  {% if appointment.statusdeuso != true %}
+
+                    <li class="content-aligth">
+                      <a aria-label="Confirmar presença" data-balloon-pos="left"
+                      class="btn btn-secondary btn-lg btn-block tooltip-azul checar" href="/app/agendamento/diarios/{{ appointment.id }}">
+                        <i class="fas fa-check"></i>
+                      </a>
+                    </li>
+                  {% else %}
+
+                    <li class="content-aligth">
+
+                      <form action="/app/agendamento/confirmacancelamento" method="post" id="myForm_{{ appointment.id }}">
+                        <input type="hidden" name="id" value="{{ appointment.id }}">
+                        <span type="button" onclick="lockFunction(this)"
+                        id="{{ appointment.id }}"
+                        aria-label="Cancelar confirmação de presença!"
+                        data-balloon-pos="left"
+                        class="btn btn-danger btn-block tooltip-azul">
+                          <i class="fas fa fa-times"></i>
+                        </span>
+
+                      </form>
+
+                    </li>
+                  {% endif %}
+                </ul>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+
+      </div>
+    </div>
+    <script>
+
+      function lockFunction(e) {
+        var id = e.id;
+        bootbox.confirm({
+          title: "Atenção!",
+          message: "<i class='fas fa-exclamation-triangle fa-lg fa-fw'></i> Tem certeza que deseja cancelar essa presença?",
+          size: "small",
+          onEscape: true,
+          backdrop: true,
+          buttons: {
+            cancel: {
+              className: 'btn-danger',
+              label: '<i class="fa fa-times"></i> Não'
+            },
+            confirm: {
+              className: 'btn-success',
+              label: '<i class="fa fa-check"></i> Sim'
+            }
+          },
+
+          callback: function (result) {
+            if (result === true) {
+              document
+                .getElementById(`myForm_${id}`)
+                .submit();
+            }
+          }
+        });
+      }
+    </script>
+
+  {% endblock %}

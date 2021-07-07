@@ -7,32 +7,68 @@
     <label for="avatar">
       <img src="/images/avatar.svg" height="24"/>
     </label>
+
     <input id="avatar" name="avatar" type="file"/>
 
-    <input type="text" name="name" placeholder="Nome completo">
 
-    <input type="email" name="email" placeholder="Seu e-mail">
+    <span class="inputWithIcon">
+      <input type="text" name="codigointerno" placeholder="Código do sócio">
+      <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
+    </span>
 
-    <input type="password" name="password" placeholder="Senha secreta">
+    <span class="inputWithIcon">
+      <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
+      <input type="text" name="name" placeholder="Nome completo">
+    </span>
 
-    <label for="provider">
-      <input type="checkbox" id="provider" name="provider" value="1">
-      Sou cabeleireiro
-    </label>
-    <button type="submit">Criar conta</button>
+    <span class="inputWithIcon">
+      <i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i>
+      <input type="email" name="email" placeholder="Seu e-mail">
+    </span>
+
+    <span class="inputWithIcon">
+      <i class="fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
+      <input type="password" placeholder="Nova senha" name="password" id="password" required="required">
+    </span>
+
+    <span class="inputWithIcon">
+      <i class="fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
+      <input type="password" placeholder="Confirme Senha" name="confirma_password" id="confirm_password" required="required">
+    </span>
+
+    <button type="submit" onclick="loading(this)">
+      <i class="fas fa-check"></i>
+      &nbsp;&nbsp;&nbsp; Criar conta</button>
     <a href="/">
-      Já possuo conta</a>
+      <i class="fas fa-arrow-left"></i>
+      &nbsp;&nbsp;&nbsp; Já possuo conta</a>
   </form>
+
+  {% include "_partials/loading.njk" %}
 
   <script type="text/javascript">
     var avatarInput = document.getElementById('avatar')
-    var img = document.querySelector('label[for=avatar] img')
+      var img = document.querySelector('label[for=avatar] img')
 
-    avatarInput.onchange = function (e) {
-      img
-        .classList
-        .add('preview')
-      img.src = URL.createObjectURL(e.target.files[0])
-    }
+        avatarInput.onchange = function (e) {
+          img
+            .classList
+            .add('preview')
+          img.src = URL.createObjectURL(e.target.files[0])
+        }
+
+        var password = document.getElementById("password"),
+          confirm_password = document.getElementById("confirm_password");
+
+        function validatePassword() {
+          if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Senhas diferentes!");
+          } else {
+            confirm_password.setCustomValidity('');
+          }
+        }
+
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
   </script>
 {% endblock %}

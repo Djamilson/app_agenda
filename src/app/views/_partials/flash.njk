@@ -1,8 +1,41 @@
 {% for message in flashSuccess %}
-<div class="alert alert-success"> {{ message }}</div>
+
+  <span class="alert alert-success">
+    <span class="closebtn" data-dismiss="alert">&times;</span>
+
+    <i class="fas fa-check"></i>
+    <strong>Sucesso!</strong>
+    <hr class="message-inner-separator">
+    <p>
+      {{ message }}</p>
+  </span>
+
 {% endfor %}
 
 {% for message in flashError %}
-<div class="alert alert-danger"> {{ message }}</div>
+
+  <span class="alert alert-danger">
+    <span class="closebtn" data-dismiss="alert">&times;</span>
+
+    <i class="fas fa-exclamation-triangle"></i>
+    <strong>Atenção!</strong>
+    <hr class="message-inner-separator">
+    <p class="pcolor">
+      {{ message }}</p>
+  </span>
 {% endfor %}
 
+<script>
+  var close = document.getElementsByClassName("closebtn");
+  var i;
+
+  for (i = 0; i < close.length; i++) {
+    close[i].onclick = function () {
+      var span = this.parentElement;
+      span.style.opacity = "0";
+      setTimeout(function () {
+        span.style.display = "none";
+      }, 600);
+    }
+  }
+</script>

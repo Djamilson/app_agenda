@@ -1,21 +1,119 @@
 {% extends "_layouts/default.njk" %}
 
 {% block body %}
-  <div class="content">
-    <strong>Seus agendamentos</strong>
-    <p>Veja abaixo a lista de agendamentos que você tem para hoje:</p>
+  <div id="hour">
+    <div class="content">
+      <div class="auth-wrapper">
+        <div >
+          <img src="/files/{{ user.avatar}}" height="24"/>
+        </div>
+      </div>
+      <strong>Olá,
+        {{ usuario.name}}</strong>
 
-    <ul class="providers">
-      {% for appointment in appointments %}
-        <li class="provider">
-          <div>
-            <img src="/files/{{ appointment.user.avatar }}" />
-            <strong>{{ appointment.user.name }} <br> {{ appointment.date | date("HH:mm") }}</strong>
-          </div>
-        </li>
-      {% endfor %}
-    </ul>
+      <a href="/app/dashboard" class="logout">
+        <i class="fas fa-chevron-left"></i>
+        &nbsp;&nbsp;&nbsp;Voltar</a>
+      <br>
+      <strong>Seus agendamentos</strong>
 
-    <a href="/app/dashboard" class="logout">Voltar</a>
-  </div>
-{% endblock %}
+      {% include "_partials/flash.njk" %}
+      <ul class="providers">
+
+        {% for appointment in appointments %}
+          <li class="provider provider-default">
+            <div class="row">
+              <div class="div2">
+                <img src="/files/{{ appointment.avatar }}"/></div>
+
+              <div class="div1">
+                <div class="component">
+
+                  <span>
+                    <strong>{{ appointment.name }}</strong>
+                    <hr class="message-inner-separator">
+                  </span>
+
+                  <div class="box">
+                    <div class="div2">
+                      <div class="formatText">
+                        Reservado para: &nbsp;&nbsp;&nbsp;
+                      </div>
+                      <div>{{ appointment.reservadopara }}</div>
+                    </div>
+                    <div class="div2">
+                      <div class="formatText">
+                        Reservado em: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      </div>
+                      <div>
+                        {{ appointment.reservadoem }}</div>
+                    </div>
+                    <div class="div2">
+                      <div class="formatText">
+                        Hora da reserva: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      </div>
+                      <div>{{ appointment.hora }}</div>
+                    </div>
+
+                    <div class="div2">
+                      <div class="formatText">
+                        {{ appointment.complemento }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {% if appointment.status != false %}
+
+                <div class="link">
+                  <form action="/app/schedule/delete/" method="post" id="myForm_{{appointment.id}}">
+                    <input type="hidden" name="id" value="{{ appointment.id }}">
+
+                    <span aria-label="Cancelar agendamento" data-balloon-pos="left" type="button" id="{{ appointment.id }}" onclick="lockFunction(this)" class="btn btn-danger btn-block tooltip-azul">
+                      <i class="fas fa fa-trash-alt"></i>
+                    </span>
+
+                  </form>
+
+                </div>
+                {% endif%}
+              </li>
+            {% endfor %}
+          </ul>
+
+        </div>
+      </div>
+      <script>
+
+        function lockFunction(e) {
+          var id = e.id;
+
+          bootbox.confirm({
+            title: "Atenção!",
+            message: "<i class='fas fa-exclamation-triangle fa-lg fa-fw'></i> Tem certeza que deseja remover essa reserva?",
+            size: "small",
+            onEscape: true,
+            backdrop: true,
+            buttons: {
+              cancel: {
+                className: 'btn-danger',
+                label: '<i class="fa fa-times"></i> Não'
+              },
+              confirm: {
+                className: 'btn-success',
+                label: '<i class="fa fa-check"></i> Sim'
+              }
+            },
+
+            callback: function (result) {
+              if (result === true) {
+                document
+                  .getElementById(`myForm_${id}`)
+                  .submit();
+              }
+            }
+          });
+        }
+      </script>
+
+    {% endblock %}

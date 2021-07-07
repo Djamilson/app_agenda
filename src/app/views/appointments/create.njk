@@ -11,17 +11,21 @@
       <input type="text" class="flatpickr" placeholder="Escolha uma data">
 
       <div id="hours"></div>
-      <button type="submit">Agendar</button>
+      <button type="submit" onclick="loading(this)">Agendar</button>
     </form>
 
   </div>
+
+  {% include "_partials/loading.njk" %}
 
   <script type="text/javascript">
     flatpickr('.flatpickr', {
       minDate: new Date(),
       dateFormat: 'd/m/Y',
+
       onChange: function (date) {
         fetch(`/app/available/{{ provider.id}}?date=${date[0].getTime()}`).then(function (response) {
+         
           response
             .text()
             .then(function (html) {

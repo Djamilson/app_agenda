@@ -1,0 +1,319 @@
+.main-wrapper .content form label[for="avatar"] {
+  width: 80px;
+  height: 80px;
+  background: #eee;
+  border-radius: 50%;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.main-wrapper .content form label[for="avatar"]:hover {
+  background: #634dac;
+}
+
+.main-wrapperr .content label img {
+  width: 80px;
+  height: 80px;
+  background: #eee;
+  border-radius: 50%;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.main-wrapper .content form label[for="avatar"] img.preview {
+  width: 100%;
+  min-height: 100%;
+}
+
+.main-wrapper .content form input[type="file"] {
+  display: none;
+}
+
+.main-wrapper .content form .input-container {
+  margin: 3em auto;
+  max-width: 300px;
+  background-color: #ededed;
+  border: 1px solid #dfdfdf;
+  border-radius: 5px;
+}
+
+.main-wrapper .content form input[type="file"] {
+  display: none;
+}
+
+.main-wrapper .content form .file-info {
+  font-size: 0.9em;
+}
+
+.main-wrapper .content form .browse-btn {
+  background: #03a595;
+  color: #fff;
+  min-height: 35px;
+  padding: 10px;
+  border: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.main-wrapper .content form .browse-btn:hover {
+  background: #4ec0b4;
+}
+
+@media (max-width: 300px) {
+  .main-wrapper .content form button {
+    width: 100%;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 0;
+  }
+
+  .main-wrapper .content form .file-info {
+    display: block;
+    margin: 10px 5px;
+  }
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover,
+.closebtn:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  filter: alpha(opacity=50);
+  opacity: 0.5;
+}
+
+hr.message-inner-separator {
+  clear: both;
+  margin-top: 10px;
+  margin-bottom: 13px;
+  border: 0;
+  height: 1px;
+  background-image: -webkit-linear-gradient(
+    left,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0)
+  );
+  background-image: -moz-linear-gradient(
+    left,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0)
+  );
+  background-image: -ms-linear-gradient(
+    left,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0)
+  );
+  background-image: -o-linear-gradient(
+    left,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0)
+  );
+}
+
+.dashboard-buttons,
+.dashboard-buttons li {
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+
+/**
+ * Force to occupy the space available
+ * and allow item being on several lines
+ */
+.dashboard-buttons {
+  width: 40px;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+/**
+ * Items tend to occupy 25% of
+ * the available width but are
+ * allow to grow.
+ */
+.dashboard-buttons li {
+  flex-basis: 15%;
+  flex-shrink: 0;
+  flex-grow: 1;
+}
+
+.dashboard-buttons a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  padding: 0.1em 1em;
+  font-weight: 500;
+  text-decoration: none;
+  color: #fff;
+}
+
+.dashboard-buttons button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  padding: 0.1em 1em;
+  font-weight: 500;
+  text-decoration: none;
+  color: #fff;
+}
+.dashboard-buttons button i {
+  padding: 10px;
+}
+
+.dashboard-buttons li {
+  margin: 2px;
+}
+
+/*Don't forget to add Font Awesome CSS : "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"*/
+input[type="text"] {
+  width: 100%;
+  border: 2px solid #aaa;
+  border-radius: 4px;
+  margin: 8px 0;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+input[type="text"]:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 8px 0 dodgerBlue;
+}
+
+.inputWithIcon input[type="text"] {
+  padding-left: 40px;
+}
+
+.inputWithIcon {
+  position: relative;
+}
+
+.inputWithIcon i {
+  position: absolute;
+  left: 86%;
+  top: 12px;
+  text-align: center;
+  padding: 9px 8px;
+  color: #aaa;
+  transition: 0.3s;
+}
+
+.inputWithIcon input[type="text"]:focus + i {
+  color: dodgerBlue;
+}
+
+.inputWithIcon.inputIconBg i {
+  background-color: #aaa;
+  color: #fff;
+  padding: 9px 4px;
+  border-radius: 4px 0 0 4px;
+}
+
+.inputWithIcon.inputIconBg input[type="text"]:focus + i {
+  color: #fff;
+  background-color: dodgerBlue;
+}
+
+input[type="password"] {
+  width: 100%;
+  border: 2px solid #aaa;
+  border-radius: 4px;
+  margin: 8px 0;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+.inputWithIcon input[type="password"]:focus + i {
+  color: dodgerBlue;
+}
+
+.inputWithIcon.inputIconBg input[type="password"]:focus + i {
+  color: #fff;
+  background-color: dodgerBlue;
+}
+
+input[type="password"]:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 8px 0 dodgerBlue;
+}
+.inputWithIcon input[type="password"] {
+  padding-left: 40px;
+}
+
+input[type="email"] {
+  width: 100%;
+  border: 2px solid #aaa;
+  border-radius: 4px;
+  margin: 8px 0;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+.inputWithIcon input[type="email"]:focus + i {
+  color: dodgerBlue;
+}
+
+.inputWithIcon.inputIconBg input[type="email"]:focus + i {
+  color: #fff;
+  background-color: dodgerBlue;
+}
+
+input[type="email"]:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 8px 0 dodgerBlue;
+}
+.inputWithIcon input[type="email"] {
+  padding-left: 40px;
+}
+
+.modal {
+  text-align: center;
+  padding: 0 !important;
+}
+.modal:before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px; /* Adjusts for spacing */
+}
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+.modal-footer button {
+  float: right;
+  margin-left: 10px;
+}
+
+

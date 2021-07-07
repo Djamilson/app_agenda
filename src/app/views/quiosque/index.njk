@@ -1,0 +1,49 @@
+{% extends "_layouts/auth.njk" %}
+
+{% block body %}
+  <form action="/app/quiosque" method="post" enctype="multipart/form-data">
+
+    <strong>Olá,
+      {{ usuario.name }}</strong>
+
+    <p>Cadastre todos itens disponíveis para locação!</p>
+
+    {% include "_partials/flash.njk" %}
+
+    <label for="avatar">
+      <img src="/images/avatar.svg" height="24"/>
+    </label>
+
+    <input id="avatar" name="avatar" type="file"/>
+
+    <input type="text" name="name" placeholder="Nome completo">
+
+    <input type="text" name="complemento" placeholder="Complemento">
+
+    <label for="provider">
+      <input type="checkbox" id="provider" name="provider" checked="checked" value="1">
+      Condição da locação: Apto para uso?
+    </label>
+    <button type="submit" onclick="loading(this)">
+      <i class="fas fa-check"></i>
+      &nbsp;&nbsp;&nbsp; Salvar</button>
+    <a href="/">
+      <i class="fas fa-arrow-left"></i>
+      &nbsp;&nbsp;&nbsp; Voltar</a>
+
+  </form>
+
+  {% include "_partials/loading.njk" %}
+
+  <script type="text/javascript">
+    var avatarInput = document.getElementById('avatar')
+    var img = document.querySelector('label[for=avatar] img')
+
+    avatarInput.onchange = function (e) {
+      img
+        .classList
+        .add('preview')
+      img.src = URL.createObjectURL(e.target.files[0])
+    }
+  </script>
+{% endblock %}

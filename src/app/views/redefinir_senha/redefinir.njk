@@ -1,0 +1,25 @@
+{% extends "_layouts/auth.njk" %}
+
+{% block body %}
+  <form action="/resend" method="post">
+    <img src="/images/logo_aabb.jpeg" height="42"/>
+
+    {% include "_partials/flash.njk" %}
+
+    <span class="inputWithIcon">
+      <i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i>
+      <input type="email" name="email" placeholder="Seu e-mail">
+    </span>
+
+    <button type="submit" onclick="loading(this)">
+      <i class="fas fa-check"></i>
+      &nbsp;&nbsp;&nbsp; Solicitar</button>
+    <a href="/">
+      <i class="fas fa-arrow-left"></i>
+      &nbsp;&nbsp;&nbsp; Já possuo conta</a>
+
+  </form>
+
+  {% include "_partials/loading.njk" %}
+
+{% endblock %}

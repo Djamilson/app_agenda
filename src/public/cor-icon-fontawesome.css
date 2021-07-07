@@ -1,0 +1,37 @@
+.fa-exclamation-triangle {
+  color: salmon;
+}
+
+/* Add this to your CSS */
+.tooltip-azul {
+  --balloon-color: #36c4ef;
+}
+
+.tooltip-big-text {
+  --balloon-font-size: 20px;
+}
+
+.tooltip-slide {
+  --balloon-move: 30px;
+}
+
+.provider-success {
+  background: #dff0d8;
+}
+.provider-cor {
+  background: #fcf8e3;
+}
+.provider-default {
+  background: #e8e3f5;
+}
+
+.orange {
+  color: #ff892a;
+}
+
+
+.blockUI.blockOverlay {
+/*	background-color: #f3f4f5 !important;*/
+	opacity: 0.5 !important;
+	box-shadow: 0 0 10px 1px #000 !important;
+}

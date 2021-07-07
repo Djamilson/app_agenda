@@ -1,4 +1,11 @@
 # Logs
+node_modules
+
+tmp/uploads/*
+
+!tmp/uploads/.gitkeep
+.env
+
 logs
 *.log
 npm-debug.log*
@@ -59,3 +66,10 @@ typings/
 
 # next.js build output
 .next
+
+node_modules
+
+tmp/uploads/*
+
+!tmp/uploads/resized/.gitkeep
+.env
